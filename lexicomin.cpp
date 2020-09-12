@@ -8,7 +8,7 @@ using namespace std;
 
 
 
-bool islexicomin (int min[][], int new_mat[][], int m_vertices)
+bool islexicomin (int min[][m_vertices], int new_mat[][], int m_vertices)
 {
 	for( int i=0; i< m_vertices; i++)
 	  {
