@@ -28,9 +28,9 @@ void islexicomin(int **min, int m_vertices, int mini_position)
 		for(int j=0;j<m_vertices-1;j++)
 		{
 			min[i][j] =rotate_copy[i][j];
-			cout<<min[i][j];
+			
 		}
-	cout<<endl;
+	
 	}
 }
 
@@ -56,12 +56,7 @@ int main() {
 	
 	
 	islexicomin(min, m_vertices,2);
-	for(i=0; i< m_vertices; i++) {
-		for(j=0; j<m_vertices-1; j++) {
-			cout<<min[i][j];
-        }
-		cout<<endl;
-   	}
+	
 	
 	return 0;
 }	
