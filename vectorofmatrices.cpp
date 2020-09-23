@@ -19,6 +19,10 @@ typedef vector<int> row;
 typedef vector < vector<int> > matrix;
 typedef vector<vector<vector<int> >  > vector_matrix;
 
+
+
+
+
 int lowestinarray(vector <int> arow)
 {
 	int lowest_ele,k;
@@ -35,24 +39,25 @@ int lowestinarray(vector <int> arow)
 }
 	
 
-void rotating_array (vector<vector<int> > & new_mat, int m_vertices)
+void rotating_array (vector<vector<vector<int> >  >& compmat, int m_vertices)
 {
 	int mini_position;
 	
-   int r, rotate_copy[new_mat.size()][m_vertices-1];
+   int r, rotate_copy[compmat.size()][m_vertices-1];
        
  
-	
-	   for(int i=0; i< new_mat.size();i++)
-	{  
+	for( int k=0;k<compmat.size();k++)
+	{
+	   for(int i=0; i< compmat[k].size();i++)
+	  {  
                 
-		mini_position = lowestinarray( new_mat[i]);
-		for(int j=0; j<new_mat[i].size();j++)
+		mini_position = lowestinarray( compmat[k][i]);
+		for(int j=0; j<compmat[k][i].size();j++)
 		{
 			
 			r= (mini_position + j) % (m_vertices-1);
 
-	  rotate_copy[i][j] = new_mat[i][r];
+	  rotate_copy[i][j] = compmat[k][i][r];
 	 
 				
 				
@@ -60,18 +65,19 @@ void rotating_array (vector<vector<int> > & new_mat, int m_vertices)
 		}
 		 
 	
-	for(int j=0; j<new_mat[i].size();j++)
+	for(int j=0; j<compmat[k][i].size();j++)
 		{
 			
 		
 
-	  new_mat[i][j] = rotate_copy[i][j] ;
+	  compmat[k][i][j] = rotate_copy[i][j] ;
 	 
 				
 			
 		}
 	
-}
+     }
+	} 
 }
 
 
@@ -102,6 +108,86 @@ int search_in_array(int v[], int s , int l)
 		}
 	}
 }	
+
+
+
+void lexicomini_of( vector<vector<vector<int> > > compmat, vector<vector<int> >& min) //call this function in the main()
+{
+	 bool flag = false;
+	
+	for( int k=0;k<compmat.size();k++)
+	{
+		 flag= false;
+	   for(int i=0; i< compmat[k].size();i++)
+	  {  
+                
+	     for(int j=0; j<compmat[k][i].size();j++)
+		    {
+			    
+				if  (compmat[k][i][j]>min[i][j]) 
+				{
+					flag = true;
+			 break;
+			 
+			 
+				}
+				 
+		           if(compmat[k][i][j]< min[i][j])
+				   {          
+			             for(int i=0; i<compmat[k].size();i++)
+						 {
+							 for(int j=0;j< compmat[k][i].size();j++)
+							 {
+								 min[i][j]= compmat[k][i][j];
+							 }
+							 
+						 }
+				         break;
+	                   
+				   }	 
+			}
+		 if  (flag == true)
+		 {
+			 break;
+		 }
+	   }
+	} 
+}	
+
+
+
+
+void reverse_rotation (vector<vector<vector<int> > > & compmat)
+{ int h;
+	for( int k=0;k<compmat.size();k++)
+	{ 
+        matrix new_mat;
+		
+	   for(int i=0; i< compmat[k].size();i++)
+	  {  
+  
+           
+            row temp;
+			temp.push_back(compmat[k][i][0]);
+	        h=1;
+		for(int j=0; j<compmat[k][i].size();j++)
+		{
+			
+			
+	    temp.push_back(compmat[k][i][(compmat[k][i].size() )-j]);
+		h++;
+				
+				
+			
+		}
+		 
+	      new_mat.push_back(temp);
+	
+     }
+	    compmat.push_back(new_mat);
+	} 
+	
+}
 
 int main()
 {
@@ -145,16 +231,17 @@ int main()
 		     temp2.push_back(rot_sys[i][j]);
 			
         	}
-			min.push_back(temp2);
+		     min.push_back(temp2);
 			new_mat.push_back(temp2);
    	  }
 	
-	
+	compmat.push_back(new_mat);
 	// generating all possible relabeling of the vertices
 	for (v[0] =1; v[0] < m_vertices+1; v[0]++) // for choosing v1 and v2 for finding the finger print.
 	{ 
         for(v[1]=1; v[1] < m_vertices+1; v[1]++)
 		{ 
+	          matrix new_mat;
    		if (v[1]==v[0]) continue;
            
 		   dummy = 1+search_in_vector( rot_sys[v[0]-1], v[1]);
@@ -183,41 +270,47 @@ int main()
 		           new_mat.push_back(temp3);
 				    
 	            } 
-	             
+	         compmat.push_back(new_mat);    
 		}
 	}
 	
-	rotating_array(new_mat, m_vertices);
+	rotating_array(compmat, m_vertices);
+//        	reverse_rotation(compmat);
+	
+	lexicomini_of(compmat,min);
 
    //TODO calling function of lexicomin.
   
  
-for(i=0; i< new_mat.size(); i++)
-   {
-		for(j=0; j<new_mat[i].size();j++){
-			cout<<new_mat[i][j]<<"  ";
+ for(k=0; k< compmat.size();k++)
+ {
+    for(i=0; i< compmat[k].size(); i++)
+     {
+		for(j=0; j<compmat[k][i].size();j++)
+		{
+			 
+			cout<<compmat[k][i][j]<<"  ";
         }
 		cout<<endl;
-		if((i%m_vertices) ==m_vertices-1)
-			cout<<endl;
+		//if((i%m_vertices) ==m_vertices-1)
+			//cout<<endl;
 		
-   	}
-
-
+    }
+ cout<<endl;
+ }
 
   
 	
 	
-	//printing the rotation system
-
-//	for(i=0; i<  m_vertices; i++)
-//	{
+cout<<" The lexicographic minimum is:"<<endl;
+	for(i=0; i< min.size();i++)
+	{
 		
-//		for(j=0;j<m_vertices-1; j++)
-//		{
-//			cout<<rot_sys[i][j]<<"     ";
-//		}
-//		cout<<endl;
-//	}
+		for(j=0;j<min[i].size();j++)
+		{
+			cout<<min[i][j]<<"     ";
+		}
+		cout<<endl;
+	}
 	
 }	
