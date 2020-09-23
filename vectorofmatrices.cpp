@@ -157,9 +157,9 @@ void lexicomini_of( vector<vector<vector<int> > > compmat, vector<vector<int> >&
 
 
 
-void reverse_rotation (vector<vector<vector<int> > > & compmat)
+void reverse_rotation (vector<vector<vector<int> > > & compmat, int size)
 { int h;
-	for( int k=0;k<compmat.size();k++)
+	for( int k=0;k<size;k++)
 	{ 
         matrix new_mat;
 		
@@ -170,11 +170,11 @@ void reverse_rotation (vector<vector<vector<int> > > & compmat)
             row temp;
 			temp.push_back(compmat[k][i][0]);
 	        h=1;
-		for(int j=0; j<compmat[k][i].size();j++)
+		for(int j=0; j<compmat[k][i].size()-1;j++)
 		{
 			
 			
-	    temp.push_back(compmat[k][i][(compmat[k][i].size() )-j]);
+	    temp.push_back(compmat[k][i][(compmat[k][i].size() ) -1 -j]);
 		h++;
 				
 				
@@ -275,7 +275,7 @@ int main()
 	}
 	
 	rotating_array(compmat, m_vertices);
-//        	reverse_rotation(compmat);
+      	reverse_rotation(compmat, compmat.size());
 	
 	lexicomini_of(compmat,min);
 
