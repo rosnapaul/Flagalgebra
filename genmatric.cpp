@@ -29,7 +29,7 @@ int main()
 	int new_clock[m_vertices][m_vertices-1];
 	int new_counterclock[m_vertices][m_vertices-1];
 	
-	int v[m_vertices],p[m_vertices];
+	int v[m_vertices],p[m_vertices], v_anti[m_vertices];
 	bool flag = false;
 	bool changemin = false;
 	
@@ -55,14 +55,13 @@ int main()
 	
 	// generating all possible relabeling of the vertices
 	for (v[0] =1; v[0] < m_vertices+1; v[0]++) // for choosing v1 and v2 for finding the finger print.
-	{  
+	{   v_anti[0]=v[0];
         p[v[0]-1] =1;
 		for(int j=0;j<m_vertices-1;j++)
 		{ 
 			v[1] =rot_sys[v[0]-1][j];
 			p[v[1]-1]=2;
-			
-			
+			v_anti[1]= v[1];
 			
 			
 			dummy = search_in_array( rot_sys[v[0]-1],v[1],m_vertices-1);
@@ -74,6 +73,13 @@ int main()
 				
 				
 				
+			}
+			
+				for(k=1; k<m_vertices-1;k++)
+			{
+				v_anti[k+1] = rot_sys[v[0]-1][(m_vertices-1 +dummy-k)%(m_vertices-1)];
+			
+			
 			}
 			
 			
@@ -115,11 +121,11 @@ int main()
 		
 			for(int h=1; h<m_vertices;h++)// looking for the counter clockwise direction.
 			{
-				dummy=search_in_array(rot_sys[v[h]-1],v[0],m_vertices-1);
+				dummy=search_in_array(rot_sys[v_anti[h]-1],v[0],m_vertices-1);
 				for(i=0;i<m_vertices-1;i++)
 				{
 				
-					new_counterclock[h][i] = 1+search_in_array(v, rot_sys[v[h]-1][(m_vertices-1+dummy-i)%(m_vertices-1)],m_vertices);
+					new_counterclock[h][i] = 1+search_in_array(v_anti, rot_sys[v_anti[h]-1][(m_vertices-1+dummy-i)%(m_vertices-1)],m_vertices);
 				}
 			}
 			
