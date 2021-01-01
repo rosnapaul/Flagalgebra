@@ -1,6 +1,3 @@
-#ifndef READ_MATRIX_H
-#define READ_MATRIX_H
-
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -10,16 +7,17 @@ typedef vector<int> row;
 typedef vector<vector<int>> collection_of_rows;
 typedef vector<vector<vector<int>>> collection_of_matrices;
 
-const unsigned short NO_OF_MATRICES = 262;
+const unsigned short NO_OF_MATRICES = 6;
 const unsigned short MATRIX_ROW_SIZE = 6;
 const unsigned short MATRIX_COLUMN_SIZE = 5;
 
-inline collection_of_matrices get_matrices(void) {
+collection_of_matrices get_matrices(void) {
     collection_of_matrices matrices;
     unsigned short i,j,k,temp; // Variables for Looping or Temporary Purposes
     unsigned char temp_char;
     ifstream infile;
-    infile.open("rotationinmyform.txt"); // To read "rotationinmyform.txt" file
+    string file_dir = "./bundle_of_permutations/";
+    infile.open(file_dir+"1.txt"); // To read from bundle_of_permutations folder
     // To Read Data from File and Insert into `matricies`
     for(i = 0; i < NO_OF_MATRICES; i++) {
         collection_of_rows matrix;
@@ -37,8 +35,7 @@ inline collection_of_matrices get_matrices(void) {
     infile.close();
     return matrices;
 }
-
-inline void print(void) {
+void print(void) {
     unsigned short i,j,k;
     collection_of_matrices matrices = get_matrices();
     // To Print the Read Matrix
@@ -53,4 +50,7 @@ inline void print(void) {
     }
 }
 
-#endif
+int main(void) {
+    print();
+    return 0;
+}

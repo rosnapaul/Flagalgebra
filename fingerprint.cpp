@@ -125,44 +125,6 @@ int main() {
    	}
 
 	compmat.push_back(new_mat);
-<<<<<<< HEAD
-	//generating all possible relabeling of the vertices
-	for (v[0] =1; v[0] < m_vertices+1; v[0]++) // for choosing v1 and v2 for finding the finger print.
-	{ 
-        for(v[1]=1; v[1] < m_vertices+1; v[1]++)
-		{ 
-	          matrix new_mat;
-   		if (v[1]==v[0]) continue;
-           
-		   dummy = 1+search_in_vector( rot_sys[v[0]-1], v[1]);
-			for (j=0; j< m_vertices-2; j++)
-			{ 
-                      
-                     r= (dummy +j) % (m_vertices -1);
-				 
-				     v[j+2] = rot_sys[v[0] -1][r];
-					 
-					 
-			}	
-			
-			
-
-                 for (l=0; l< m_vertices; l++)
-	          {    row temp3;
-		  
-		          for(m=0; m< m_vertices-1; m++)
-		               {
-			                 k= search_in_array(v,rot_sys[v[l]-1][m], m_vertices);
-							 cout<<k;
-			                temp3.push_back(k);
-							
-		                }
-		            cout<<endl;
-		           new_mat.push_back(temp3);
-				    
-	            } 
-	         compmat.push_back(new_mat);    
-=======
 	// Generating All Possible Relabeling of the Vertices
 	for (v[0] = 1; v[0] < (m_vertices + 1); v[0]++) { // For Choosing v1 and v2 for Finding the Fingerprint.
         for(v[1] = 1; v[1] < (m_vertices + 1); v[1]++) {
@@ -182,7 +144,6 @@ int main() {
 				new_mat.push_back(temp3);
 			} 
 			compmat.push_back(new_mat);
->>>>>>> 717e739ee8ca03e752fa135fd275a251b0992100
 		}
 	}
 

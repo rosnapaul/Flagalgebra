@@ -17,6 +17,7 @@ int search_in_array(int v[], int s, int l) {
 	for(int i = 0; i < l; i++)
 		if(v[i] == s)
 			return i;
+	return 0;
 }
 
 int factorial(int n) {
