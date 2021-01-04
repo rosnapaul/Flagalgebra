@@ -50,7 +50,31 @@ void print(void) {
     }
 }
 
+void lexicomini_of(vector<vector<vector<int>>> compmat, vector<vector<int>> &min) {
+	bool flag = false;
+	for(int k = 0; k < compmat.size(); k++) {
+		flag = false;
+		for(int i = 0; i < compmat[k].size(); i++) {  
+	    	for(int j = 0; j < compmat[k][i].size(); j++) {
+				if(compmat[k][i][j] > min[i][j]) {
+					flag = true;
+			 		break;
+				}
+				if(compmat[k][i][j] < min[i][j]) {          
+					for(int i = 0; i < compmat[k].size(); i++)
+						for(int j=0;j < compmat[k][i].size(); j++)
+							min[i][j] = compmat[k][i][j];
+					break;
+				}
+			}
+		 	if(flag == true)
+				break;
+		}
+	}
+}
+
 int main(void) {
-    print();
+    collection_of_matrices matrices = get_matrices();
+    lexicomini_of(matrices, matrices[0]);
     return 0;
 }
