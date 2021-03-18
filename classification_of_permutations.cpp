@@ -14,9 +14,11 @@
 using namespace std;
 
 int search_in_array(int v[], int s, int l) {
-	for(int i = 0; i < l; i++)
-		if(v[i] == s)
+	for(int i = 0; i < l; i++) {
+		if(v[i] == s) {
 			return i;
+		}
+	}
 	return 0;
 }
 
@@ -24,7 +26,7 @@ int factorial(int n) {
 	return (n == 1 || n == 0) ? 1 : n * factorial(n-1);
 }
 
-int main() {
+int main(void) {
 	int i,j,k,l,m,h,dummy,r,type_size,m_vertices = 6;
 	int rot_sys[m_vertices][m_vertices-1];
 	int new_clock[m_vertices][m_vertices-1];
@@ -54,11 +56,13 @@ int main() {
 			stringstream filename;
 			filename<<"./bundle_of_permutations/"<<num_bundle<<".txt";
 			outfile.open(filename.str().c_str(), ofstream::out);
-			if(!outfile.good())
+			if(!outfile.good()) {
 				cout<<"failed opening file"<< filename.str()<<endl;
 			}
-		for(i = 0; i < m_vertices; i++)
+		}
+		for(i = 0; i < m_vertices; i++) {
 				cout<<v[i]<<" ";
+		}
 		cout<<endl<<endl;
 
 		dummy = search_in_array(rot_sys[v[0]-1], v[1], (m_vertices - 1));
@@ -66,7 +70,7 @@ int main() {
 			flag = false;
 			new_clock[0][i] = 1 + search_in_array(v, rot_sys[v[0]-1][(dummy+i) % (m_vertices-1)], m_vertices);
 		}
-		for(int h = 1; h < m_vertices; h++) {// finding the relabeled vertices and rotating them such that least element comes first.
+		for(int h = 1; h < m_vertices; h++) { // finding the relabeled vertices and rotating them such that least element comes first.
 			flag = false;
 			dummy = search_in_array(rot_sys[v[h]-1], v[0], (m_vertices-1)); // looking for the clockwise direction
 			for(i = 0; i < (m_vertices - 1); i++) {
@@ -75,10 +79,11 @@ int main() {
 			}
 		}
 
-		cout<<"bundle size "<<bundle_size++<<endl;
+		cout << "bundle size " << bundle_size++ << endl;
 		for(i = 0; i < m_vertices; i++) {
-			for(j = 0; j < (m_vertices - 1); j++)
+			for(j = 0; j < (m_vertices - 1); j++) {
 				outfile<<new_clock[i][j]<<" ";
+			}
 			outfile<<endl;
 		}
 		outfile<<endl;
@@ -89,4 +94,6 @@ int main() {
 				outfile.close();
 		}
 	}while(std::next_permutation(v,v+6));
+	cout << "The output of this program is written to 'bundle_of_permutations' folder." << endl;
+	return 0;
 }

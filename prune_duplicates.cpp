@@ -23,11 +23,12 @@ int main(void) {
     for(i = (counter + 1); i < matrices.size(); i++) { // matrices.size() gives 261
       bool duplicate = true;
       for(j = 0; j < MATRIX_ROW_SIZE; j++) { // MATRIX_ROW_SIZE is set as 6
-        for(k = 0; k < MATRIX_COLUMN_SIZE; k++) // MATRIX_COLUMN_SIZE is set as 5
+        for(k = 0; k < MATRIX_COLUMN_SIZE; k++) { // MATRIX_COLUMN_SIZE is set as 5
           if(matrices[i][j][k] != matrices[counter][j][k]) {
             duplicate = false;
             break;
           }
+				}
       }
       if(duplicate && (i != counter) && (isDuplicate(i,duplicate_entries) == false)) {
         duplicate_entries.push_back(i);
@@ -38,8 +39,9 @@ int main(void) {
   stringstream filename;
   filename<<"./distinct_flags.txt";
   outfile.open(filename.str().c_str(), ofstream::out);
-  if(!outfile.good())
-    cout<<"failed opening file"<< filename.str()<<endl;
+  if(!outfile.good()) {
+    cout << "failed opening file: " << filename.str() << endl;
+	}
   for(i = 0; i < matrices.size(); i++) {
     if(isDuplicate(i,duplicate_entries) == false) {
       for(j = 0; j < MATRIX_ROW_SIZE; j++) {
