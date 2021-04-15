@@ -117,11 +117,11 @@ int main(void) {
 	for(int i = 0; i < 120; i++) {
 		lexicomini_of(matrices, matrices[0]);
 	}
-	for(int i = 0; i < lexicographic_min.size(); i++) {
+	for(int i = 0; i < matrices.size(); i++) {
 		cout << "Matrix " << i+1 << ":" << endl;
-		for(int j = 0; j < lexicographic_min[i].size(); j++) {
-				for(int k = 0; k < lexicographic_min[i][j].size(); k++)
-						cout << lexicographic_min[i][j][k] << " ";
+		for(int j = 0; j < matrices[i].size(); j++) {
+				for(int k = 0; k < matrices[i][j].size(); k++)
+						cout << matrices[i][j][k] << " ";
 				cout << endl;
 		}
 		cout << endl;
