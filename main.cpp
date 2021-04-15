@@ -13,9 +13,6 @@ typedef vector<int> row;
 typedef vector<vector<int>> collection_of_rows;
 typedef vector<vector<vector<int>>> collection_of_matrices;
 
-const unsigned short NO_OF_MATRICES = 6;
-const unsigned short MATRIX_ROW_SIZE = 6;
-const unsigned short MATRIX_COLUMN_SIZE = 5;
 collection_of_matrices matrices;
 collection_of_matrices lexicographic_min;
 
@@ -122,8 +119,8 @@ int main(void) {
 	}
 	for(int i = 0; i < lexicographic_min.size(); i++) {
 		cout << "Matrix " << i+1 << ":" << endl;
-		for(int j = 0; j < MATRIX_ROW_SIZE; j++) {
-				for(int k = 0; k < MATRIX_COLUMN_SIZE; k++)
+		for(int j = 0; j < lexicographic_min[i].size(); j++) {
+				for(int k = 0; k < lexicographic_min[i][j].size(); k++)
 						cout << lexicographic_min[i][j][k] << " ";
 				cout << endl;
 		}
