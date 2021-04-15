@@ -16,6 +16,8 @@ typedef vector<vector<vector<int>>> collection_of_matrices;
 const unsigned short NO_OF_MATRICES = 6;
 const unsigned short MATRIX_ROW_SIZE = 6;
 const unsigned short MATRIX_COLUMN_SIZE = 5;
+collection_of_matrices matrices;
+collection_of_matrices lexicographic_min;
 
 int search_in_array(int v[], int s, int l) {
 	for(int i = 0; i < l; i++) {
@@ -52,10 +54,8 @@ int classification_of_permutations(void) {
 
 	int final_bundle_size = factorial(m_vertices - type_size);
 
-	cout<<"The size of the bundles "<< final_bundle_size<<endl;
-
 	int num_bundle = 1, bundle_size = 1;
-	collection_of_matrices matrices;
+
 	do {
 		dummy = search_in_array(rot_sys[v[0]-1], v[1], (m_vertices - 1));
 		for(i = 0; i < (m_vertices - 1); i++) {
@@ -81,17 +81,6 @@ int classification_of_permutations(void) {
 		}
 	matrices.push_back(matrix);
 	}while(std::next_permutation(v,v+6));
-
-	for(i = 0; i < matrices.size(); i++) {
-		for(j = 0; j < MATRIX_ROW_SIZE; j++) {
-				for(k = 0; k < MATRIX_COLUMN_SIZE; k++)
-						cout << matrices[i][j][k] << " ";
-				cout << endl;
-		}
-		cout << endl;
-	}
-
-	cout << "The output of this program is written to the terminal." << endl;
 	return 0;
 }
 
@@ -126,6 +115,19 @@ void lexicomini_of(vector<vector<vector<int>>> compmat, vector<vector<int>> &min
 }
 
 int main(void) {
-    classification_of_permutations();
-    return 0;
+	classification_of_permutations();
+	collection_of_matrices temp_matrices = matrices;
+	for(int i = 0; i < 120; i++) {
+		lexicomini_of(matrices, matrices[0]);
+	}
+	for(int i = 0; i < lexicographic_min.size(); i++) {
+		cout << "Matrix " << i+1 << ":" << endl;
+		for(int j = 0; j < MATRIX_ROW_SIZE; j++) {
+				for(int k = 0; k < MATRIX_COLUMN_SIZE; k++)
+						cout << lexicographic_min[i][j][k] << " ";
+				cout << endl;
+		}
+		cout << endl;
+	}
+  return 0;
 }
