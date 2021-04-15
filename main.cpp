@@ -13,6 +13,10 @@ typedef vector<int> row;
 typedef vector<vector<int>> collection_of_rows;
 typedef vector<vector<vector<int>>> collection_of_matrices;
 
+const unsigned short NO_OF_MATRICES = 6;
+const unsigned short MATRIX_ROW_SIZE = 6;
+const unsigned short MATRIX_COLUMN_SIZE = 5;
+
 int search_in_array(int v[], int s, int l) {
 	for(int i = 0; i < l; i++) {
 		if(v[i] == s) {
@@ -27,12 +31,14 @@ int factorial(int n) {
 }
 
 int classification_of_permutations(void) {
-	int i,j,k,l,m,h,dummy,r,type_size,m_vertices = 6;
-	int rot_sys[m_vertices][m_vertices-1];
-	int new_clock[m_vertices][m_vertices-1];
+	int i,j,k,l,m,h,dummy,r,type_size,m_vertices;
 	bool flag = false;
 	bool changemin = false;
 
+	cout<<"Enter the m_vertices: ";
+	cin>>m_vertices;
+	int rot_sys[m_vertices][m_vertices-1];
+	int new_clock[m_vertices][m_vertices-1];
 	cout<<"Enter the type size: ";
 	cin>>type_size;
 	cout<<"Enter the rotation system: "<<endl;
@@ -49,7 +55,7 @@ int classification_of_permutations(void) {
 	cout<<"The size of the bundles "<< final_bundle_size<<endl;
 
 	int num_bundle = 1, bundle_size = 1;
-
+	collection_of_matrices matrices;
 	do {
 		dummy = search_in_array(rot_sys[v[0]-1], v[1], (m_vertices - 1));
 		for(i = 0; i < (m_vertices - 1); i++) {
@@ -65,17 +71,58 @@ int classification_of_permutations(void) {
 			}
 		}
 
-		cout << "bundle size " << bundle_size++ << endl;
+		collection_of_rows matrix;
 		for(i = 0; i < m_vertices; i++) {
+			row temp_row;
 			for(j = 0; j < (m_vertices - 1); j++) {
-				cout<<new_clock[i][j]<<" ";
+				temp_row.push_back(new_clock[i][j]);
 			}
-			cout<<endl;
+			matrix.push_back(temp_row);
 		}
-
+	matrices.push_back(matrix);
 	}while(std::next_permutation(v,v+6));
+
+	for(i = 0; i < matrices.size(); i++) {
+		for(j = 0; j < MATRIX_ROW_SIZE; j++) {
+				for(k = 0; k < MATRIX_COLUMN_SIZE; k++)
+						cout << matrices[i][j][k] << " ";
+				cout << endl;
+		}
+		cout << endl;
+	}
+
 	cout << "The output of this program is written to the terminal." << endl;
 	return 0;
+}
+
+void lexicomini_of(vector<vector<vector<int>>> compmat, vector<vector<int>> &min) {
+	bool flag = false;
+	for(int k = 0; k < compmat.size(); k++) {
+		flag = false;
+		for(int i = 0; i < compmat[k].size(); i++) {  
+	    for(int j = 0; j < compmat[k][i].size(); j++) {
+				if(compmat[k][i][j] > min[i][j]) {
+					flag = true;
+			 		break;
+				}
+				if(compmat[k][i][j] < min[i][j]) { 
+					collection_of_rows matrix;       
+					for(int i = 0; i < compmat[k].size(); i++) {
+						row temp_row;
+						for(int j=0;j < compmat[k][i].size(); j++) {
+							min[i][j] = compmat[k][i][j];
+							temp_row.push_back(min[i][j]);
+						}
+						matrix.push_back(temp_row);
+					}
+					lexicographic_min.push_back(matrix);
+					break;
+				}
+			}
+		 	if(flag == true)
+				break;
+		}
+	}
 }
 
 int main(void) {
