@@ -1,7 +1,19 @@
-// This programm is to find the fingerprint of a  given rotation system. This programm first collects a rotation system(you can view it as a matrix) from the user and store it as a vector. Then you have to choose a vertex as 1and a vertex as2. This is done by using a for loop
-//  When two vertices are fixed, the we name the the other vertices from 3, 4.. in the order of their clockwise apparence aftetr the vertex named as 2 in the row (/vertex) named as 1. Now we relace the the old naming with the new naming and store each of these matrices
-// Now we rotate each row of the matrix so that the lowest elemt comes first( plz note that it is rotation but not the rearrangement). We also rotate the given rotation system(matrix) and store it as the mini matrix.
-// Then we take each element from the list of matrices we formed by relabelling and compare each of them and find the lexicographic minimum among them.  Which gives the fingerprint.
+// This programm is to generate flags.
+// This program takes a matrix(rotation system) and we find all flags with this matrix.
+// what we are doing? We take a matrix and ask for the type_size. With in the same type_size there can be
+// differet types. We need to classify flags according to them.
+// Here we consider the all possibe permutations of m_vertices = (size of flag). For each
+// permutation we find relabeled matrix. We store these matrices in different bundles.
+// Among the permutations, we collect all permutations whose first type_size elements are in same permutations.
+// (This is due to the fact that these are of same type. Also the labelling of the type is same and
+// the only difference is in the labelling of the nontype vertices, which we are not considering.
+// If the type vertices have same labelling the all relabeling of non type vertices corresponds to the same flag.)
+// These collections are called bundles, which is essentially the same flag. So in each bundle,
+// there will be (m_vertices - type_size)! matrices and the total number of bundles will be (m_vertices)!/(m_vertices-type_size)!.
+//TO DO:
+// From each bundle collect the lexicographic minimum matrix and store in a different file.
+// From this file remove the duplicates.
+// Seperate flags according to the type.
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -93,7 +105,7 @@ int main(void) {
 				num_bundle++;
 				outfile.close();
 		}
-	}while(std::next_permutation(v,v+6));
+	}while(std::next_permutation(v,v+m_vertices));
 	cout << "The output of this program is written to 'bundle_of_permutations' folder." << endl;
 	return 0;
 }
