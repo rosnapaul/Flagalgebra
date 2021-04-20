@@ -1,12 +1,12 @@
 // This program is to find the density of an unlabeled flag( small matrix) over another unlabeled flag (big rotation system)
-// How this program works? Suppose the small matrix A has size 5 and big matrix B has size 10.  To find the density of A in B we have to choose  any 5 (=|A|) vertices from the 10 (=|B|) vertices. This chossing can be done by relabeling the vertices of big matrix and consider only 5 of them. 
+// How this program works? Suppose the small matrix A has size 5 and big matrix B has size 10.  To find the density of A in B we have to choose  any 5 (=|A|) vertices from the 10 (=|B|) vertices. This chossing can be done by relabeling the vertices of big matrix and consider only 5 of them.
 // Each vector "v" for the relabelling was given by the combination (5 \choose 10). Here i am giving this combinations manually. TO DO: we should  rewrite the program such that the values if "v" are taken from a file.
-// Once we obtained the relabeled sub matric of the big matrix, we find the lexicominimum of it ( ie we find the fingerprint of it) and compare it with the given small matrix. If the comparision is true then we count it. 
+// Once we obtained the relabeled sub matric of the big matrix, we find the lexicominimum of it ( ie we find the fingerprint of it) and compare it with the given small matrix. If the comparision is true then we count it.
 // This count divided by the total number of combinations gives the densty of A over B.
 
 // This programm is to find the fingerprint of a  given rotation system. This programm first collects a rotation system(you can view it as a matrix) from the user and store it as a vector. Then you have to choose a vertex as 1and a vertex as2. This is done by using a for loop
 //  When two vertices are fixed, the we name the the other vertices from 3, 4.. in the order of their clockwise apparence aftetr the vertex named as 2 in the row (/vertex) named as 1. Now we relace the the old naming with the new naming and store each of these matrices
-// Now we rotate each row of the matrix so that the lowest elemt comes first( plz note that it is rotation but not the rearrangement). We also rotate the given rotation system(matrix) and store it as the mini matrix. 
+// Now we rotate each row of the matrix so that the lowest elemt comes first( plz note that it is rotation but not the rearrangement). We also rotate the given rotation system(matrix) and store it as the mini matrix.
 // Then we take each element from the list of matrices we formed by relabelling and compare each of them and find the lexicographic minimum among them.  Which gives the fingerprint.
 
 
@@ -37,7 +37,7 @@ void rotating_array(vector<vector<vector<int>>> &compmat, int m_vertices) {
 	int mini_position;
 	int r,rotate_copy[compmat.size()][m_vertices-1];
 	for(int k = 0; k < compmat.size(); k++) {
-	   for(int i = 0; i < compmat[k].size(); i++) {          
+	   for(int i = 0; i < compmat[k].size(); i++) {
 			mini_position = lowestinarray(compmat[k][i]);
 			for(int j = 0; j < compmat[k][i].size(); j++) {
 				r = (mini_position + j) % (m_vertices - 1);
@@ -61,20 +61,20 @@ int search_in_array(int v[], int s, int l) {
 		if(v[i]==s)
 			return i+1;
 	return 0;
-}	
+}
 
 /*
-void lexicomini_of( vector<vector<vector<int> > > compmat, vector<vector<int> >& min) { //call this function in the main() 
+void lexicomini_of( vector<vector<vector<int> > > compmat, vector<vector<int> >& min) { //call this function in the main()
 	bool flag = false;
 	for(int k = 0; k < compmat.size(); k++) {
 		flag = false;
-		for(int i = 0; i < compmat[k].size(); i++) {  
+		for(int i = 0; i < compmat[k].size(); i++) {
 	    	for(int j = 0; j < compmat[k][i].size(); j++) {
 				if(compmat[k][i][j] > min[i][j]) {
 					flag = true;
 			 		break;
 				}
-				if(compmat[k][i][j] < min[i][j]) {          
+				if(compmat[k][i][j] < min[i][j]) {
 					for(int i = 0; i < compmat[k].size(); i++)
 						for(int j=0;j < compmat[k][i].size(); j++)
 							min[i][j] = compmat[k][i][j];
@@ -89,9 +89,9 @@ void lexicomini_of( vector<vector<vector<int> > > compmat, vector<vector<int> >&
 
 void reverse_rotation (vector<vector<vector<int>>> &compmat, int size) {
 	int h;
-	for(int k = 0; k < size; k++) { 
+	for(int k = 0; k < size; k++) {
         matrix new_mat;
-		for(int i = 0; i < compmat[k].size(); i++) {           
+		for(int i = 0; i < compmat[k].size(); i++) {
         	row temp;
 			temp.push_back(compmat[k][i][0]);
 	        h = 1;
@@ -106,8 +106,8 @@ void reverse_rotation (vector<vector<vector<int>>> &compmat, int size) {
 }
 */
 int main() {
-	int m_vertices,i,j,k,l,m,dummy,r,type_size;
-	cout<<"Enter the number of vertices"<<endl;
+	int m_vertices,i,j,k,l,m,dummy,r,small_size;
+	cout<<"Enter the number of vertices of big matrix"<<endl;
 	cin>>m_vertices;
 	matrix rot_sys, min, new_mat;
 	vector_matrix compmat;
@@ -124,24 +124,24 @@ int main() {
         }
 		rot_sys.push_back(temp1);
    	}
-	
+
 	 cout<<"Enter the type size"<<endl;
-	 cin>>type_size;
-	
+	 cin>>small_size;
+
 	//  Relabeling of the Vertices corresponding to combination
-	
+
 	// here I explicitly giving the combinations, actually it has to be in a loop kinda structure where each
 	// value of "v'" has to be taken from a file. In this loop like thing we introduce a variable "total_count" and increment it when we take new value for "v",
-    // Hence "total_count" counts the total number of combinations. 
-	
+    // Hence "total_count" counts the total number of combinations.
+
 	   cout<<"Enter the combination of all vertices"<<endl;
            for(i=0;i<m_vertices;i++)
-                        cin>>v[i];	  // give here the coresponding combinations 
+                        cin>>v[i];	  // give here the coresponding combinations
 	        matrix change_mat;
-			
+
 			// An example suppose our chooen vertices are 1,2,3,5,6 out of, say 6 vertices. then our v = {1,2,3,5,6,4).
 			// In the next step, we find the matrix corresponding to this choosing. this matrix must be in the size of the given small matrix.
-			// to acheive that we need to avoid some extra rows and some extra integers in the remaining rows. 
+			// to acheive that we need to avoid some extra rows and some extra integers in the remaining rows.
 			//
 			// 2 3 4 5 6                                         2 3 4 5
 			// 1 4 3 6 5                                         1 3 5 4              Here we avoided the 6th row and the interger 6.
@@ -149,40 +149,40 @@ int main() {
 			// 1 3 6 2 5   ------------------------>            1 2 5 3
 			// 1 2 6 4 3                                         1 4 2 3
 			// 1 4 5 2 3
-   			
-			for(l = 0; l <type_size; l++) { // we avoid the extra rows in the big matrix
+
+			for(l = 0; l <small_size; l++) { // we avoid the extra rows in the big matrix
 				row temp3;
 				for(m = 0; m < m_vertices-1; m++) {
 					k = search_in_array(v, rot_sys[v[l]-1][m], m_vertices);
-					if(k>type_size) continue;  // here we avoid the appearence of the extra vertices in the remaining rows.
+					if(k>small_size) continue;  // here we avoid the appearence of the extra vertices in the remaining rows.
 					temp3.push_back(k);
 				}
 				change_mat.push_back(temp3);
 			} 
-			
-			
-			
+
+
+
 			// Just to see the changed matrix.
 			cout<<" The changed matrix is"<<endl;
-			
+
 			for(i = 0; i < change_mat.size(); i++) {
 		for(j=0;j<change_mat[i].size();j++)
 			cout<<change_mat[i][j]<<"     ";
 		cout<<endl;
 	}
-			
-			
+
+
 		//	Now take this matrix and find the fingerprint of this matrix by calling the function.
 		// Then compare the fingerprint with the given small matrix.
 		// if the comparision is true, int count++
 		// then count/total_count gives the density. this value is retured to the "main" funtion in the original program.
-		
+
 
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
-	
-	
-	
+
+
+
+
 	/*
 	// Copying the given Rotation System as the Mininum Matrix
 	for(i = 0; i < rot_sys.size(); i++) {
@@ -195,7 +195,7 @@ int main() {
 
 	compmat.push_back(new_mat);
 	*/
-	
+
 /*
 	// Generating All Possible Relabeling of the Vertices
 	for (v[0] = 1; v[0] < (m_vertices + 1); v[0]++) { // For Choosing v1 and v2 for Finding the Fingerprint.
@@ -206,7 +206,7 @@ int main() {
 			for(j = 0; j < (m_vertices - 2); j++) {
 				r = (dummy +j) % (m_vertices -1);
 				v[j+2] = rot_sys[v[0] -1][r];
-			}	
+			}
 			for(l = 0; l < m_vertices; l++) {
 				row temp3;
 				for(m = 0; m < m_vertices-1; m++) {
@@ -214,7 +214,7 @@ int main() {
 					temp3.push_back(k);
 				}
 				new_mat.push_back(temp3);
-			} 
+			}
 			compmat.push_back(new_mat);
 
 		}
@@ -244,4 +244,4 @@ int main() {
 	}
 	*/
 	return 0;
-}	
+}
