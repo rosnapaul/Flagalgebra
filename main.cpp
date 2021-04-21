@@ -77,7 +77,7 @@ int classification_of_permutations(void) {
 			matrix.push_back(temp_row);
 		}
 	matrices.push_back(matrix);
-	}while(std::next_permutation(v,v+6));
+}while(std::next_permutation(v,v+m_vertices));
 	return 0;
 }
 
@@ -85,14 +85,14 @@ void lexicomini_of(vector<vector<vector<int>>> compmat, vector<vector<int>> &min
 	bool flag = false;
 	for(int k = 0; k < compmat.size(); k++) {
 		flag = false;
-		for(int i = 0; i < compmat[k].size(); i++) {  
+		for(int i = 0; i < compmat[k].size(); i++) {
 	    for(int j = 0; j < compmat[k][i].size(); j++) {
 				if(compmat[k][i][j] > min[i][j]) {
 					flag = true;
 			 		break;
 				}
-				if(compmat[k][i][j] < min[i][j]) { 
-					collection_of_rows matrix;       
+				if(compmat[k][i][j] < min[i][j]) {
+					collection_of_rows matrix;
 					for(int i = 0; i < compmat[k].size(); i++) {
 						row temp_row;
 						for(int j=0;j < compmat[k][i].size(); j++) {
