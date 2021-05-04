@@ -12,9 +12,7 @@ using namespace std;
 typedef vector<int> row;
 typedef vector<vector<int>> collection_of_rows;
 typedef vector<vector<vector<int>>> collection_of_matrices;
-
-collection_of_matrices matrices;
-collection_of_matrices lexicographic_min;
+typedef vector<vector<vector<vector<int>>>> collection_of_collection_of_matrices;
 
 int search_in_array(int v[], int s, int l) {
 	for(int i = 0; i < l; i++) {
@@ -29,7 +27,11 @@ int factorial(int n) {
 	return (n == 1 || n == 0) ? 1 : n * factorial(n-1);
 }
 
-int classification_of_permutations(void) {
+int main(void) {
+	collection_of_collection_of_matrices classification_of_permutation;
+	collection_of_matrices matrices;
+	collection_of_rows matrix;
+	row temp_row;
 	int i,j,k,l,m,h,dummy,r,type_size,m_vertices;
 	bool flag = false;
 	bool changemin = false;
@@ -51,9 +53,16 @@ int classification_of_permutations(void) {
 
 	int final_bundle_size = factorial(m_vertices - type_size);
 
+	cout<<"The size of the bundles "<< final_bundle_size<<endl;
+
 	int num_bundle = 1, bundle_size = 1;
 
 	do {
+		/* for(i = 0; i < m_vertices; i++) {
+				cout<<v[i]<<" ";
+		}
+		cout<<endl<<endl; */
+
 		dummy = search_in_array(rot_sys[v[0]-1], v[1], (m_vertices - 1));
 		for(i = 0; i < (m_vertices - 1); i++) {
 			flag = false;
@@ -68,63 +77,48 @@ int classification_of_permutations(void) {
 			}
 		}
 
-		collection_of_rows matrix;
 		for(i = 0; i < m_vertices; i++) {
-			row temp_row;
 			for(j = 0; j < (m_vertices - 1); j++) {
+				//cout<<new_clock[i][j]<<" ";
 				temp_row.push_back(new_clock[i][j]);
 			}
 			matrix.push_back(temp_row);
+			temp_row.clear();
 		}
-	matrices.push_back(matrix);
-}while(std::next_permutation(v,v+m_vertices));
-	return 0;
-}
+		matrices.push_back(matrix);
+		matrix.clear();
 
-void lexicomini_of(vector<vector<vector<int>>> compmat, vector<vector<int>> &min) {
-	bool flag = false;
-	for(int k = 0; k < compmat.size(); k++) {
-		flag = false;
-		for(int i = 0; i < compmat[k].size(); i++) {
-	    for(int j = 0; j < compmat[k][i].size(); j++) {
-				if(compmat[k][i][j] > min[i][j]) {
-					flag = true;
-			 		break;
+		cout<<"Bundle size "<<bundle_size<<":"<<endl;
+		for(i = 0; i < matrices.size(); i++) {
+			cout<<"Matrix "<<i+1<<":"<<endl;
+			for(j = 0; j < matrices[i].size(); j++) {
+				for(k = 0; k < matrices[i][j].size(); k++) {
+					cout<<matrices[i][j][k]<<" ";
 				}
-				if(compmat[k][i][j] < min[i][j]) {
-					collection_of_rows matrix;
-					for(int i = 0; i < compmat[k].size(); i++) {
-						row temp_row;
-						for(int j=0;j < compmat[k][i].size(); j++) {
-							min[i][j] = compmat[k][i][j];
-							temp_row.push_back(min[i][j]);
-						}
-						matrix.push_back(temp_row);
-					}
-					lexicographic_min.push_back(matrix);
-					break;
-				}
+				cout<<endl;
 			}
-		 	if(flag == true)
-				break;
+			cout<<endl;
 		}
-	}
-}
-
-int main(void) {
-	classification_of_permutations();
-	collection_of_matrices temp_matrices = matrices;
-	for(int i = 0; i < 120; i++) {
-		lexicomini_of(matrices, matrices[0]);
-	}
-	for(int i = 0; i < matrices.size(); i++) {
-		cout << "Matrix " << i+1 << ":" << endl;
-		for(int j = 0; j < matrices[i].size(); j++) {
-				for(int k = 0; k < matrices[i][j].size(); k++)
-						cout << matrices[i][j][k] << " ";
-				cout << endl;
+		if(bundle_size == (final_bundle_size + 1)) {
+				bundle_size = 1;
+				num_bundle++;
+				classification_of_permutation.push_back(matrices);
+				matrices.clear();
 		}
-		cout << endl;
-	}
-  return 0;
+	}while(std::next_permutation(v,v+m_vertices));
+/* 	for(int i=0; i<classification_of_permutation.size(); i++) {
+		cout<<"The bundle size "<<i+1<<": "<<endl;
+		for(int j=0; j<classification_of_permutation[i].size(); j++) {
+			cout<<"The matrix number "<<j+1<<": "<<endl;
+			for(int k=0; k<classification_of_permutation[i][j].size(); k++) {
+				for(int l=0; l<classification_of_permutation[i][j][k].size(); l++) {
+					cout<<classification_of_permutation[i][j][k][l]<<" ";
+				}
+				cout<<endl;
+			}
+			cout<<endl;
+		}
+		cout<<endl;
+	} */
+	return 0;
 }
