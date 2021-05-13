@@ -51,7 +51,7 @@ int main(void) {
 	memset( new_clock, 0, m_vertices*(m_vertices-1)*sizeof(int) );
 	/* cout<<"Enter the type size: ";
 	cin>>type_size; */
-	type_size = 5;
+	type_size = 3;
 	/* cout<<"Enter the rotation system: "<<endl;
  	 for(i = 0; i < m_vertices; i++)
 		for(j = 0; j < (m_vertices-1); j++)
