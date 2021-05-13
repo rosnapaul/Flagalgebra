@@ -6,6 +6,8 @@
 #include<algorithm>
 #include<sstream>
 #include<istream>
+#include <typeinfo>
+#include<cstring>
 
 using namespace std;
 
@@ -36,16 +38,24 @@ int main(void) {
 	bool flag = false;
 	bool changemin = false;
 
-	cout<<"Enter the m_vertices: ";
-	cin>>m_vertices;
-	int rot_sys[m_vertices][m_vertices-1];
+	/* cout<<"Enter the m_vertices: ";
+	cin>>m_vertices; */
+	m_vertices = 6;
+	int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6},
+											{1,3,4,5,6},
+											{1,2,4,5,6},
+											{1,2,3,5,6},
+											{1,2,3,4,6},
+											{1,2,3,4,5}};
 	int new_clock[m_vertices][m_vertices-1];
-	cout<<"Enter the type size: ";
-	cin>>type_size;
-	cout<<"Enter the rotation system: "<<endl;
-	for(i = 0; i < m_vertices; i++)
+	memset( new_clock, 0, m_vertices*(m_vertices-1)*sizeof(int) );
+	/* cout<<"Enter the type size: ";
+	cin>>type_size; */
+	type_size = 5;
+	/* cout<<"Enter the rotation system: "<<endl;
+ 	 for(i = 0; i < m_vertices; i++)
 		for(j = 0; j < (m_vertices-1); j++)
-			cin>>rot_sys[i][j];
+			cin>>rot_sys[i][j]; */
 
 	int v[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 
@@ -88,28 +98,20 @@ int main(void) {
 		matrices.push_back(matrix);
 		matrix.clear();
 
-		cout<<"Bundle size "<<bundle_size<<":"<<endl;
-		for(i = 0; i < matrices.size(); i++) {
-			cout<<"Matrix "<<i+1<<":"<<endl;
-			for(j = 0; j < matrices[i].size(); j++) {
-				for(k = 0; k < matrices[i][j].size(); k++) {
-					cout<<matrices[i][j][k]<<" ";
-				}
-				cout<<endl;
-			}
-			cout<<endl;
-		}
-		if(bundle_size == (final_bundle_size + 1)) {
-				bundle_size = 1;
-				num_bundle++;
-				classification_of_permutation.push_back(matrices);
-				matrices.clear();
+		if(bundle_size == final_bundle_size) {
+			bundle_size = 1;
+			++num_bundle;
+			classification_of_permutation.push_back(matrices);
+			matrices.clear();
+		} else {
+			++bundle_size;
 		}
 	}while(std::next_permutation(v,v+m_vertices));
-/* 	for(int i=0; i<classification_of_permutation.size(); i++) {
+
+	for(int i=0; i<classification_of_permutation.size(); i++) {
 		cout<<"The bundle size "<<i+1<<": "<<endl;
 		for(int j=0; j<classification_of_permutation[i].size(); j++) {
-			cout<<"The matrix number "<<j+1<<": "<<endl;
+			cout<<"Matrix "<<j+1<<": "<<endl;
 			for(int k=0; k<classification_of_permutation[i][j].size(); k++) {
 				for(int l=0; l<classification_of_permutation[i][j][k].size(); l++) {
 					cout<<classification_of_permutation[i][j][k][l]<<" ";
@@ -118,7 +120,6 @@ int main(void) {
 			}
 			cout<<endl;
 		}
-		cout<<endl;
-	} */
+	}
 	return 0;
 }
