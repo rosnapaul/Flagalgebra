@@ -16,6 +16,11 @@ typedef vector<vector<int>> collection_of_rows;
 typedef vector<vector<vector<int>>> collection_of_matrices;
 typedef vector<vector<vector<vector<int>>>> collection_of_collection_of_matrices;
 
+collection_of_collection_of_matrices classification_of_permutation;
+collection_of_matrices matrices,lexicographic_min;
+collection_of_rows matrix;
+row temp_row;
+
 int search_in_array(int v[], int s, int l) {
 	for(int i = 0; i < l; i++) {
 		if(v[i] == s) {
@@ -29,11 +34,37 @@ int factorial(int n) {
 	return (n == 1 || n == 0) ? 1 : n * factorial(n-1);
 }
 
+void lexicomini_of(vector<vector<vector<int>>> compmat, vector<vector<int>> &min) {
+	bool flag = false;
+	for(int k = 0; k < compmat.size(); k++) {
+		flag = false;
+		for(int i = 0; i < compmat[k].size(); i++) {  
+	    for(int j = 0; j < compmat[k][i].size(); j++) {
+				if(compmat[k][i][j] > min[i][j]) {
+					flag = true;
+			 		break;
+				}
+				if(compmat[k][i][j] < min[i][j]) { 
+					collection_of_rows matrix;       
+					for(int i = 0; i < compmat[k].size(); i++) {
+						row temp_row;
+						for(int j=0;j < compmat[k][i].size(); j++) {
+							min[i][j] = compmat[k][i][j];
+							temp_row.push_back(min[i][j]);
+						}
+						matrix.push_back(temp_row);
+					}
+					lexicographic_min.push_back(matrix);
+					break;
+				}
+			}
+		 	if(flag == true)
+				break;
+		}
+	}
+}
+
 int main(void) {
-	collection_of_collection_of_matrices classification_of_permutation;
-	collection_of_matrices matrices;
-	collection_of_rows matrix;
-	row temp_row;
 	int i,j,k,l,m,h,dummy,r,type_size,m_vertices;
 	bool flag = false;
 	bool changemin = false;
@@ -42,11 +73,11 @@ int main(void) {
 	cin>>m_vertices; */
 	m_vertices = 6;
 	int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6},
-											{1,3,4,5,6},
-											{1,2,4,5,6},
-											{1,2,3,5,6},
-											{1,2,3,4,6},
-											{1,2,3,4,5}};
+						{1,3,4,5,6},
+						{1,2,4,5,6},
+						{1,2,3,5,6},
+						{1,2,3,4,6},
+						{1,2,3,4,5}};
 	int new_clock[m_vertices][m_vertices-1];
 	memset( new_clock, 0, m_vertices*(m_vertices-1)*sizeof(int) );
 	/* cout<<"Enter the type size: ";
@@ -108,6 +139,8 @@ int main(void) {
 		}
 	}while(std::next_permutation(v,v+m_vertices));
 
+	/* // To print `classfication_of_permutation`
+	cout<<"Classification of Permutation:"<<endl;
 	for(int i=0; i<classification_of_permutation.size(); i++) {
 		cout<<"The bundle size "<<i+1<<": "<<endl;
 		for(int j=0; j<classification_of_permutation[i].size(); j++) {
@@ -120,6 +153,30 @@ int main(void) {
 			}
 			cout<<endl;
 		}
+	} */
+
+	for(int i=0; i<classification_of_permutation.size(); i++) {
+		if(classification_of_permutation[i].size() > 1) {
+			for(int j=0; j<classification_of_permutation[i].size(); j++) {
+				lexicomini_of(classification_of_permutation[i], classification_of_permutation[i][0]);
+			}
+		} else if(classification_of_permutation[i].size() == 1) {
+			lexicographic_min.push_back(classification_of_permutation[i][0]);
+		}
+		
+	}
+	
+	// To print `lexicographic_min`
+	cout<<"Lexicographic Minimum:"<<endl;
+	for(int i=0; i<lexicographic_min.size(); i++) {
+		cout<<"Matrix "<<i+1<<": "<<endl;
+		for(int j=0; j<lexicographic_min[i].size(); j++) {
+			for(int k=0; k<lexicographic_min[i][j].size(); k++) {
+				cout<<lexicographic_min[i][j][k]<<" ";
+			}
+			cout<<endl;
+		}
+		cout<<endl;
 	}
 	return 0;
 }
