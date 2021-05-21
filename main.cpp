@@ -19,7 +19,7 @@ typedef vector<vector<vector<vector<int>>>> collection_of_collection_of_matrices
 collection_of_collection_of_matrices classification_of_permutation;
 collection_of_matrices matrices,lexicographic_min;
 collection_of_rows matrix;
-row temp_row;
+row temp_row,duplicate_entries;
 
 int search_in_array(int v[], int s, int l) {
 	for(int i = 0; i < l; i++) {
@@ -62,6 +62,15 @@ void lexicomini_of(vector<vector<vector<int>>> compmat, vector<vector<int>> &min
 				break;
 		}
 	}
+}
+
+static bool isDuplicate(int value, std::vector<int> vec) {
+  for(int i = 0; i < vec.size(); i++) {
+    if(vec[i] == value) {
+      return true;
+    }
+  }
+  return false;
 }
 
 int main(void) {
@@ -177,6 +186,38 @@ int main(void) {
 			cout<<endl;
 		}
 		cout<<endl;
+	}
+
+	// To prune the duplicates
+	for(unsigned int counter = 0; counter < lexicographic_min.size() - 1; counter++) {
+    	for(i = (counter + 1); i < lexicographic_min.size(); i++) {
+      		bool duplicate = true;
+      		for(j = 0; j < lexicographic_min[i].size(); j++) {
+        		for(k = 0; k < lexicographic_min[i][j].size(); k++) {
+          			if(lexicographic_min[i][j][k] != lexicographic_min[counter][j][k]) {
+            			duplicate = false;
+            			break;
+          			}
+				}
+      		}
+    		if(duplicate && (i != counter) && (isDuplicate(i,duplicate_entries) == false)) {
+    			duplicate_entries.push_back(i);
+    		}
+    	}
+	}
+	int counter = 0;
+	cout<<"After Removing Duplicates:"<<endl;
+	for(i = 0; i < lexicographic_min.size(); i++) {
+		if(isDuplicate(i,duplicate_entries) == false) {
+			cout<<"Matrix "<<++counter<<":"<<endl;
+			for(j = 0; j < lexicographic_min[i].size(); j++) {
+				for(k = 0; k < lexicographic_min[i][j].size(); k++) {
+					cout << lexicographic_min[i][j][k] << " ";
+				}
+				cout << endl;
+			}
+			cout << endl;
+		}
 	}
 	return 0;
 }
