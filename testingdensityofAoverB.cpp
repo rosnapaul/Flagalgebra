@@ -17,9 +17,12 @@
 #include<vector>
 #include<math.h>
 #include<algorithm>
+#include <stdio.h>
+#include <string.h>
 using namespace std;
 
 typedef vector<int> row;
+typedef vector<bool> bool_array;
 typedef vector<vector<int>> matrix;
 typedef vector<vector<vector<int>>> vector_matrix;
 
@@ -106,22 +109,55 @@ void reverse_rotation (vector<vector<vector<int>>> &compmat, int size) {
 	}
 }
 */
+
+bool_array compare_with_given_matrix(vector_matrix matrices, matrix given_matrix) {
+	bool_array temp;
+	for(int matrix=0; matrix<matrices.size(); matrix++) {
+		bool same = true;
+		for(int row=0; row<matrices[matrix].size(); row++) {
+			for(int col=0; col<matrices[matrix][row].size(); col++) {
+				if(matrices[matrix][row][col] != given_matrix[row][col]) {
+					same = false;
+					break;
+				}
+			}
+		}
+		if(same == true) temp.push_back(true);
+		else temp.push_back(false);
+	}
+	return temp;
+}
+
+int count_of_same_matrices(bool_array A, bool_array B) {
+	int count = 0;
+	if(A.size() != B.size()) {
+		cout<<"Both arrays don't have same no. of elements."<<endl;
+		return 1;
+	} else {
+		for(int temp=0; temp<A.size(); temp++)
+			if(A[temp] == true && B[temp] == true)
+				++count;
+	}
+	return count;
+}
+
 int main() {
 	int m_vertices,i,j,k,l,m,dummy,r,type_size;
 	cout<<"Enter the number of vertices"<<endl;
 	cin>>m_vertices;
-	matrix rot_sys, min, new_mat;
+	matrix min, new_mat;
 	vector_matrix compmat;
 
 	//int v[m_vertices];
 		
-	int v[] = { 1,2,3,4,5,6,7,8,9,10,11,12,13};
+	int v[] = {1,2,3,4,5,6,7,8,9,10,11,12,13};
 	
 	std::sort(v,v+m_vertices);
 	
 
 	// Collecting the Rotation System, this i the big rotation system . We still havent inputed the small matrix. which actually can be done by reading a file.
-	cout<<"Enter the rotation system"<<endl;
+	matrix rot_sys {{2,3,4,5,6,7}, {1,3,4,5,6,7}, {1,2,4,5,6,7}, {1,2,3,5,6,7}, {1,2,3,4,6,7}, {1,2,3,4,5,7}, {1,2,3,4,5,6}};
+	/* cout<<"Enter the rotation system"<<endl;
 	for(i = 0; i < m_vertices; i++) {
 		row temp1;
 		for(j = 0; j < (m_vertices - 1); j++) {
@@ -129,7 +165,7 @@ int main() {
 			temp1.push_back(k);
         }
 		rot_sys.push_back(temp1);
-   	}
+   	} */
 	
 
 	
@@ -175,76 +211,76 @@ int main() {
 			
 			int f_1[5]= {0,0,0,0,0};
 			
-				cout<<"the array   f1"<<endl;
-			for(i=0; i< 5;i++){
-				cout<<f_1[i];
-			}
-			cout<<endl;
-			
 			int f_2[5]= {0,0,0,0,0};
 			rotating_array(compmat, m_vertices);
+
+			matrix F_1 {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6}, {1,2,3,4,5}};
 			
-			int F_1[m_vertices-1][m_vertices-2] = {{2,3,4,5,6},
-			{1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6}, {1,2,3,4,5}};
-			
-			int F_2[m_vertices-1][m_vertices-2] = {{2,3,4,6,5}, {1,3,4,6,5}, {1,2,4,6,5}, {1,2,3,6,5}, {1,2,3,4,6}, {1,2,3,4,5}};
+			matrix F_2 = {{2,3,4,6,5}, {1,3,4,6,5}, {1,2,4,6,5}, {1,2,3,6,5}, {1,2,3,4,6}, {1,2,3,4,5}};
 			
 			// Just to see the changed matrix.
-			cout<<" The changed matrix is"<<endl;
-			for(k = 0; k <5; k++) {
-				
-			for(i = 0; i < compmat[k].size(); i++) {
-				if ((i+1)%7 ==0) continue;
-		for(j=0;j<compmat[k][i].size();j++){
-			if (compmat[k][i][j] ==7) continue;
-		//	if (compmat[k][i][j]  != F_1[i][j])
-		//	{
-		//		f_1[k]=1;
-		//		cout<<k<<" "<<i<<" "<<j<<" "<<compmat[k][i][j]<<" "<<F_1[i][j]<<endl;
-		//	}
-			cout<<compmat[k][i][j];
+			vector_matrix pruned_matrices_1;
+			cout<<"The first changed matrix is"<<endl;
+			for(k = 0; k < compmat.size(); k++) {
+				matrix temp_matrix;
+				for(i = 0; i < compmat[k].size(); i++) {
+					row temp_row;
+					if((i+1) % 7 == 0) continue;
+					for(j=0;j<compmat[k][i].size();j++) {
+						if(compmat[k][i][j] == 7) continue;
+						cout<<compmat[k][i][j]<<" ";
+						temp_row.push_back(compmat[k][i][j]);
+					}
+					cout<<endl;
+					temp_matrix.push_back(temp_row);
+				}
+				cout<<endl;
+				pruned_matrices_1.push_back(temp_matrix);
+			}      
+
+			bool_array first_comparison = compare_with_given_matrix(pruned_matrices_1,F_1);
 			
-		}
-		cout<<endl;
-		
-	}      
-			cout<<endl;
-			cout<<k<<endl;
-			cout<<endl;
-			}			
-			
-			
-				// Just to see the changed matrix.
-			cout<<" The changed matrix is"<<endl;
-			for(k = 0; k <5; k++) {
-				
-			for(i = 0; i < compmat[k].size(); i++) {
-				if ((i+1)%6==0) continue;
-		for(j=0;j<compmat[k][i].size();j++){
-			if (compmat[k][i][j] ==6) continue;
-			if (compmat[k][i][j]==7){
-				compmat[k][i][j] = 6;
-			    
-			 }
-				
-		//	if(compmat[k][i][j]!= F_1[i][j])
-		//	{
-		//		f_2[k]=1;
-		//		cout<<k<<" "<<i<<" "<<j<<" "<<compmat[k][i][j]<<" "<<F_1[i][j]<<endl;
-		//	}
-			
-			cout<<compmat[k][i][j]; 
-		}
-		cout<<endl;
-		
-	}      
-			cout<<endl;
-			cout<<k<<endl;
-			cout<<endl;
+			// Just to see the changed matrix.
+			vector_matrix pruned_matrices_2;
+			cout<<"The second changed matrix is"<<endl;
+			for(k = 0; k < compmat.size(); k++) {
+				matrix temp_matrix;
+				for(i = 0; i < compmat[k].size(); i++) {
+					row temp_row;
+					if ((i+1) % 6 == 0) continue;
+					for(j=0;j<compmat[k][i].size();j++) {
+						if (compmat[k][i][j] == 6) continue;
+						if (compmat[k][i][j] == 7) 
+							compmat[k][i][j] = 6;
+						cout<<compmat[k][i][j]<<" "; 
+						temp_row.push_back(compmat[k][i][j]);
+					}
+					cout<<endl;
+					temp_matrix.push_back(temp_row);
+				}
+				cout<<endl;
+				pruned_matrices_2.push_back(temp_matrix);
 			}		
 			
+			bool_array second_comparison = compare_with_given_matrix(pruned_matrices_2,F_2);
+
+			/* cout<<"First Comparison Results : "<<endl;
+			for(int i = 0; i<first_comparison.size(); i++) {
+				if(first_comparison[i] == true) cout<<"1,";
+				else cout<<"0,";
+			}
+			cout<<endl<<endl;
+
+			cout<<"Second Comparison Results: "<<endl;
+			for(int i = 0; i<second_comparison.size(); i++) {
+				if(second_comparison[i] == true) cout<<"1,";
+				else cout<<"0,";
+			}
+			cout<<endl<<endl; */
+
+			cout<<"Count of Similar Matrices are: "<<count_of_same_matrices(first_comparison, second_comparison)<<endl;
 			
-			cout<<"the array   f1"<<endl;
+			/* cout<<"the array   f1"<<endl;
 			for(i=0; i< 5;i++){
 				cout<<f_1[i];
 			}
@@ -254,7 +290,7 @@ int main() {
 			for(i=0; i< 5;i++){
 				cout<<f_2[i];
 			}
-			cout<<endl;
+			cout<<endl; */
 		//	Now take this matrix and find the fingerprint of this matrix by calling the function.
 		// Then compare the fingerprint with the given small matrix.
 		// if the comparision is true, int count++
