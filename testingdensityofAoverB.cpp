@@ -185,13 +185,13 @@ int main() {
 			// In the next step, we find the matrix corresponding to this choosing. this matrix must be in the size of the given small matrix.
 			// to acheive that we need to avoid some extra rows and some extra integers in the remaining rows. 
 			//
-			// 2 3 4 5 6 7                                        2 3 4 5 6
-			// 1 3 4 5 6 7                                       1 3 4 5 6            Here we avoided the 6th row and the interger 6.
-			// 1 2 4 5 6 7                                        1 2 4 5 6
-			// 1 2 3 5 6 7  ------------------------>            1 2 3 5 6 
-			// 1 2 3 4 6 7                                        1 2 3 4 6
-			// 1 2 3 4 5 7                                         1 2 3 4 5
-			//1 2 3 4 5 6
+			// 2 3 4 5 6 7								2 3 4 5 6
+			// 1 3 4 5 6 7								1 3 4 5 6            Here we avoided the 6th row and the interger 6.
+			// 1 2 4 5 6 7								1 2 4 5 6
+			// 1 2 3 5 6 7  ------------------------>	1 2 3 5 6 
+			// 1 2 3 4 6 7								1 2 3 4 6
+			// 1 2 3 4 5 7								1 2 3 4 5
+			// 1 2 3 4 5 6
    			do{
 				   matrix change_mat;
 			for(l = 0; l <m_vertices; l++) { // we avoid the extra rows in the big matrix
@@ -216,7 +216,7 @@ int main() {
 
 			matrix F_1 {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6}, {1,2,3,4,5}};
 			
-			matrix F_2 = {{2,3,4,6,5}, {1,3,4,6,5}, {1,2,4,6,5}, {1,2,3,6,5}, {1,2,3,4,6}, {1,2,3,4,5}};
+			matrix F_2 {{2,3,4,6,5}, {1,3,4,6,5}, {1,2,4,6,5}, {1,2,3,6,5}, {1,2,3,4,6}, {1,2,3,4,5}};
 			
 			// Just to see the changed matrix.
 			vector_matrix pruned_matrices_1;
