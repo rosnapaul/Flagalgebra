@@ -185,10 +185,11 @@ int main() {
 			// In the next step, we find the matrix corresponding to this choosing. this matrix must be in the size of the given small matrix.
 			// to acheive that we need to avoid some extra rows and some extra integers in the remaining rows. 
 			//
+			// 	 BEFORE									  AFTER
 			// 2 3 4 5 6 7								2 3 4 5 6
 			// 1 3 4 5 6 7								1 3 4 5 6            Here we avoided the 6th row and the interger 6.
 			// 1 2 4 5 6 7								1 2 4 5 6
-			// 1 2 3 5 6 7  ------------------------>	1 2 3 5 6 
+			// 1 2 3 5 6 7								1 2 3 5 6 
 			// 1 2 3 4 6 7								1 2 3 4 6
 			// 1 2 3 4 5 7								1 2 3 4 5
 			// 1 2 3 4 5 6
@@ -209,9 +210,6 @@ int main() {
 				 
 			}while(std::next_permutation(v,v+m_vertices));
 			
-			int f_1[5]= {0,0,0,0,0};
-			
-			int f_2[5]= {0,0,0,0,0};
 			rotating_array(compmat, m_vertices);
 
 			matrix F_1 {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6}, {1,2,3,4,5}};
@@ -264,6 +262,7 @@ int main() {
 			
 			bool_array second_comparison = compare_with_given_matrix(pruned_matrices_2,F_2);
 
+			// DEBUGGING
 			/* cout<<"First Comparison Results : "<<endl;
 			for(int i = 0; i<first_comparison.size(); i++) {
 				if(first_comparison[i] == true) cout<<"1,";
