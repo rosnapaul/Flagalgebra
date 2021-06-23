@@ -17,6 +17,8 @@
 #include<vector>
 #include<math.h>
 #include<algorithm>
+#include <stdio.h>
+#include <string.h>
 using namespace std;
 
 typedef vector<int> row;
@@ -183,11 +185,10 @@ int main() {
 			
 			int f_2[5]= {0,0,0,0,0};
 			rotating_array(compmat, m_vertices);
+
+			matrix F_1 {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6}, {1,2,3,4,5}};
 			
-			int F_1[m_vertices-1][m_vertices-2] = {{2,3,4,5,6},
-			{1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6}, {1,2,3,4,5}};
-			
-			int F_2[m_vertices-1][m_vertices-2] = {{2,3,4,6,5}, {1,3,4,6,5}, {1,2,4,6,5}, {1,2,3,6,5}, {1,2,3,4,6}, {1,2,3,4,5}};
+			matrix F_2 = {{2,3,4,6,5}, {1,3,4,6,5}, {1,2,4,6,5}, {1,2,3,6,5}, {1,2,3,4,6}, {1,2,3,4,5}};
 			
 			// Just to see the changed matrix.
 			cout<<" The changed matrix is"<<endl;
