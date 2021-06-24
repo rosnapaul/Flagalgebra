@@ -38,14 +38,14 @@ void lexicomini_of(vector<vector<vector<int>>> compmat, vector<vector<int>> &min
 	bool flag = false;
 	for(int k = 0; k < compmat.size(); k++) {
 		flag = false;
-		for(int i = 0; i < compmat[k].size(); i++) {  
+		for(int i = 0; i < compmat[k].size(); i++) {
 	    for(int j = 0; j < compmat[k][i].size(); j++) {
 				if(compmat[k][i][j] > min[i][j]) {
 					flag = true;
 			 		break;
 				}
-				if(compmat[k][i][j] < min[i][j]) { 
-					collection_of_rows matrix;       
+				if(compmat[k][i][j] < min[i][j]) {
+					collection_of_rows matrix;
 					for(int i = 0; i < compmat[k].size(); i++) {
 						row temp_row;
 						for(int j=0;j < compmat[k][i].size(); j++) {
@@ -54,7 +54,7 @@ void lexicomini_of(vector<vector<vector<int>>> compmat, vector<vector<int>> &min
 						}
 						matrix.push_back(temp_row);
 					}
-					lexicographic_min.push_back(matrix);
+					//lexicographic_min.push_back(matrix);
 					break;
 				}
 			}
@@ -91,7 +91,7 @@ int main(void) {
 	memset( new_clock, 0, m_vertices*(m_vertices-1)*sizeof(int) );
 	/* cout<<"Enter the type size: ";
 	cin>>type_size; */
-	type_size = 3;
+	type_size = 5;
 	/* cout<<"Enter the rotation system: "<<endl;
  	 for(i = 0; i < m_vertices; i++)
 		for(j = 0; j < (m_vertices-1); j++)
@@ -166,15 +166,16 @@ int main(void) {
 
 	for(int i=0; i<classification_of_permutation.size(); i++) {
 		if(classification_of_permutation[i].size() > 1) {
-			for(int j=0; j<classification_of_permutation[i].size(); j++) {
+			//for(int j=0; j<classification_of_permutation[i].size(); j++) {
 				lexicomini_of(classification_of_permutation[i], classification_of_permutation[i][0]);
-			}
+				lexicographic_min.push_back(classification_of_permutation[i][0]);
+			//}
 		} else if(classification_of_permutation[i].size() == 1) {
 			lexicographic_min.push_back(classification_of_permutation[i][0]);
 		}
-		
+
 	}
-	
+
 	// To print `lexicographic_min`
 	cout<<"Lexicographic Minimum:"<<endl;
 	for(int i=0; i<lexicographic_min.size(); i++) {
