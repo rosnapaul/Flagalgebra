@@ -17,7 +17,7 @@ typedef vector<vector<vector<int>>> collection_of_matrices;
 typedef vector<vector<vector<vector<int>>>> collection_of_collection_of_matrices;
 
 collection_of_collection_of_matrices classification_of_permutation;
-collection_of_matrices matrices,lexicographic_min;
+collection_of_matrices matrices,lexicographic_min,pruned_lexico_min;
 collection_of_rows matrix;
 row temp_row,duplicate_entries;
 
@@ -81,12 +81,7 @@ int main(void) {
 	/* cout<<"Enter the m_vertices: ";
 	cin>>m_vertices; */
 	m_vertices = 6;
-	int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6},
-						{1,3,4,5,6},
-						{1,2,4,5,6},
-						{1,2,3,5,6},
-						{1,2,3,4,6},
-						{1,2,3,4,5}};
+	int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6}, {1,2,3,4,5}};
 	int new_clock[m_vertices][m_vertices-1];
 	memset( new_clock, 0, m_vertices*(m_vertices-1)*sizeof(int) );
 	/* cout<<"Enter the type size: ";
@@ -177,6 +172,7 @@ int main(void) {
 	}
 
 	// To print `lexicographic_min`
+	/*
 	cout<<"Lexicographic Minimum:"<<endl;
 	for(int i=0; i<lexicographic_min.size(); i++) {
 		cout<<"Matrix "<<i+1<<": "<<endl;
@@ -187,7 +183,7 @@ int main(void) {
 			cout<<endl;
 		}
 		cout<<endl;
-	}
+	} */
 
 	// To prune the duplicates
 	for(unsigned int counter = 0; counter < lexicographic_min.size() - 1; counter++) {
@@ -206,19 +202,24 @@ int main(void) {
     		}
     	}
 	}
-	int counter = 0;
-	cout<<"After Removing Duplicates:"<<endl;
 	for(i = 0; i < lexicographic_min.size(); i++) {
 		if(isDuplicate(i,duplicate_entries) == false) {
+			pruned_lexico_min.push_back(lexicographic_min[i]);
+		}
+	}
+
+	// To print the pruned matrices
+	int counter = 0;
+	for(i = 0; i < pruned_lexico_min.size(); i++) {
 			cout<<"Matrix "<<++counter<<":"<<endl;
-			for(j = 0; j < lexicographic_min[i].size(); j++) {
-				for(k = 0; k < lexicographic_min[i][j].size(); k++) {
-					cout << lexicographic_min[i][j][k] << " ";
+			for(j = 0; j < pruned_lexico_min[i].size(); j++) {
+				for(k = 0; k < pruned_lexico_min[i][j].size(); k++) {
+					cout << pruned_lexico_min[i][j][k] << " ";
 				}
 				cout << endl;
 			}
 			cout << endl;
-		}
 	}
+
 	return 0;
 }
