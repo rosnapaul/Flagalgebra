@@ -17,7 +17,7 @@ typedef vector<vector<int>> collection_of_rows;
 typedef vector<vector<vector<int>>> collection_of_matrices;
 typedef vector<vector<vector<vector<int>>>> collection_of_collection_of_matrices;
 
-collection_of_collection_of_matrices classification_of_permutation;
+collection_of_collection_of_matrices classification_of_permutation, matrices_in_type_matrix;
 collection_of_matrices matrices,lexicographic_min,pruned_lexico_min;
 collection_of_rows matrix;
 row temp_row,duplicate_entries;
@@ -210,7 +210,7 @@ int main(void) {
 	}
 
 	// To print the pruned matrices
-	cout<<"After Pruning:"<<endl;
+	/* cout<<"After Pruning:"<<endl;
 	int counter = 0;
 	for(i = 0; i < pruned_lexico_min.size(); i++) {
 			cout<<"Matrix "<<++counter<<":"<<endl;
@@ -221,7 +221,7 @@ int main(void) {
 				cout << endl;
 			}
 			cout << endl;
-	}
+	} */
 
 	// To reduce the matrix
 	collection_of_matrices reduced_matrices;
@@ -240,7 +240,7 @@ int main(void) {
 	}
 
 	// To print reduced matrices
-	cout<<"After Reducing:"<<endl;
+	/* cout<<"After Reducing:"<<endl;
 	counter = 0;
 	for(i = 0; i < reduced_matrices.size(); i++) {
 			cout<<"Matrix "<<++counter<<":"<<endl;
@@ -251,14 +251,16 @@ int main(void) {
 				cout << endl;
 			}
 			cout << endl;
-	}
+	} */
 
-	// To retrieve type matrices
-	cout<<"Type Matrices:"<<endl;
+	// To retrieve `type_matrices`
 	collection_of_matrices type_matrices = get_matrices("file5vertices.txt",6,5,4);
-	counter = 0;
+
+	// To print the `type_matrices`
+	cout<<"Type Matrices:"<<endl;
+	int counter = 0;
 	for(i = 0; i < type_matrices.size(); i++) {
-			cout<<"Matrix "<<++counter<<":"<<endl;
+			cout<<"Type Matrix "<<++counter<<":"<<endl;
 			for(j = 0; j < type_matrices[i].size(); j++) {
 				for(k = 0; k < type_matrices[i][j].size(); k++) {
 					cout << type_matrices[i][j][k] << " ";
@@ -266,7 +268,51 @@ int main(void) {
 				cout << endl;
 			}
 			cout << endl;
+	} 
+
+	// To populate `matrices_in_type_matrix`
+	for(i = 0; i < type_matrices.size(); i++) {
+		collection_of_matrices temp_collection;
+		matrices_in_type_matrix.push_back(temp_collection);
 	}
 
+	// To compare reduced matrices with type matrices
+	for(i = 0; i < reduced_matrices.size(); i++) {
+		for(int type = 0; type < type_matrices.size(); type++) {
+			bool is_same = true;
+			for(j = 0; j < reduced_matrices[i].size(); j++) {
+				for(k = 0; k < reduced_matrices[i][j].size(); k++) {
+					// To break the loop if element is not same
+					if(reduced_matrices[i][j][k] != type_matrices[type][j][k]) {
+						is_same = false;
+						break;
+					}
+				}
+				// To prevent checking other rows since one element is not same
+				if(is_same == false) break;
+			}
+			// To push to the specific type the equivalent matrix from the pruned_lexico_min matrices.
+			if(is_same == true) {
+				matrices_in_type_matrix[type].push_back(pruned_lexico_min[i]);
+				break;
+			}
+		}
+	}
+
+
+	for(i = 0; i < matrices_in_type_matrix.size(); i++) {
+		cout<<"Matrices in Type "<<(i + 1)<<":"<<endl;
+		for(j = 0; j < matrices_in_type_matrix[i].size(); j++) {
+			cout<<"Matrix "<<(j + 1)<<":"<<endl;
+			for(k = 0; k < matrices_in_type_matrix[i][j].size(); k++) {
+				for(l = 0; l < matrices_in_type_matrix[i][j][k].size(); l++) {
+					cout<<matrices_in_type_matrix[i][j][k][l]<<" ";
+				}
+				cout<<endl;
+			}
+			cout<<endl;
+		}
+		cout<<endl;
+	}
 	return 0;
 }
