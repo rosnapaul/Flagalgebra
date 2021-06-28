@@ -209,6 +209,7 @@ int main(void) {
 	}
 
 	// To print the pruned matrices
+	cout<<"After Pruning:"<<endl;
 	int counter = 0;
 	for(i = 0; i < pruned_lexico_min.size(); i++) {
 			cout<<"Matrix "<<++counter<<":"<<endl;
@@ -221,5 +222,34 @@ int main(void) {
 			cout << endl;
 	}
 
+	// To reduce the matrix
+	collection_of_matrices reduced_matrices;
+	for(i = 0; i < pruned_lexico_min.size(); i++) {
+			collection_of_rows temp_matrix;
+			for(j = 0; j < (pruned_lexico_min[i].size() - 1); j++) {
+				row temp_row;
+				for(k = 0; k < pruned_lexico_min[i][j].size(); k++) {
+					if(pruned_lexico_min[i][j][k] < (type_size + 1)) {
+						temp_row.push_back(pruned_lexico_min[i][j][k]);
+					}
+				}
+				temp_matrix.push_back(temp_row);
+			}
+			reduced_matrices.push_back(temp_matrix);
+	}
+
+	// To print reduced matrices
+	cout<<"After Reducing:"<<endl;
+	counter = 0;
+	for(i = 0; i < reduced_matrices.size(); i++) {
+			cout<<"Matrix "<<++counter<<":"<<endl;
+			for(j = 0; j < reduced_matrices[i].size(); j++) {
+				for(k = 0; k < reduced_matrices[i][j].size(); k++) {
+					cout << reduced_matrices[i][j][k] << " ";
+				}
+				cout << endl;
+			}
+			cout << endl;
+	}
 	return 0;
 }
