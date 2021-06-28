@@ -8,6 +8,7 @@
 #include<istream>
 #include <typeinfo>
 #include<cstring>
+#include"read_matrix.h"
 
 using namespace std;
 
@@ -251,5 +252,21 @@ int main(void) {
 			}
 			cout << endl;
 	}
+
+	// To retrieve type matrices
+	cout<<"Type Matrices:"<<endl;
+	collection_of_matrices type_matrices = get_matrices("file5vertices.txt",6,5,4);
+	counter = 0;
+	for(i = 0; i < type_matrices.size(); i++) {
+			cout<<"Matrix "<<++counter<<":"<<endl;
+			for(j = 0; j < type_matrices[i].size(); j++) {
+				for(k = 0; k < type_matrices[i][j].size(); k++) {
+					cout << type_matrices[i][j][k] << " ";
+				}
+				cout << endl;
+			}
+			cout << endl;
+	}
+
 	return 0;
 }

@@ -10,10 +10,7 @@ typedef vector<int> row;
 typedef vector<vector<int>> collection_of_rows;
 typedef vector<vector<vector<int>>> collection_of_matrices;
 
-const unsigned short MATRIX_ROW_SIZE = 6;
-const unsigned short MATRIX_COLUMN_SIZE = 5;
-
-inline collection_of_matrices get_matrices(string filename,unsigned short NO_OF_MATRICES) {
+inline collection_of_matrices get_matrices(string filename,unsigned short NO_OF_MATRICES,unsigned short MATRIX_ROW_SIZE,unsigned short MATRIX_COLUMN_SIZE) {
     collection_of_matrices matrices;
     unsigned short i,j,k,temp; // Variables for Looping or Temporary Purposes
     unsigned char temp_char;
@@ -35,34 +32,6 @@ inline collection_of_matrices get_matrices(string filename,unsigned short NO_OF_
     }
     infile.close();
     return matrices;
-}
-
-inline void print_all(void) {
-    unsigned short i,j,k;
-    collection_of_matrices matrices = get_matrices("flags.txt",120);
-    // To Print the Read Matrix
-    for(i = 0; i < matrices.size(); i++) {
-        cout << "Matrix " << i+1 << ":" << endl;
-        for(j = 0; j < MATRIX_ROW_SIZE; j++) {
-            for(k = 0; k < MATRIX_COLUMN_SIZE; k++)
-                cout << matrices[i][j][k] << " ";
-            cout << endl;
-        }
-        cout << endl;
-    }
-}
-
-inline void print(int index) {
-    unsigned short i,j,k;
-    collection_of_matrices matrices = get_matrices("flags.txt",120);
-    // To Print the Read Matrix
-    cout << "Matrix " << index << ":" << endl;
-    for(j = 0; j < MATRIX_ROW_SIZE; j++) {
-        for(k = 0; k < MATRIX_COLUMN_SIZE; k++) {
-            cout << matrices[index][j][k] << " ";
-        }  
-    cout << endl;
-    }
 }
 
 #endif

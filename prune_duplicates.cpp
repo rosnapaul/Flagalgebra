@@ -17,7 +17,7 @@ static bool isDuplicate(int value, std::vector<int> vec) {
 int main(void) {
   row duplicate_entries;
   unsigned short i,j,k; // Variables Needed For Loop
-  collection_of_matrices matrices = get_matrices("flags.txt",120); // `matrices` gets initialized with those matrices.
+  collection_of_matrices matrices = get_matrices("flags.txt",120,6,5); // `matrices` gets initialized with those matrices.
 
   for(unsigned short counter = 0; counter < matrices.size() - 1; counter++) {
     for(i = (counter + 1); i < matrices.size(); i++) { // matrices.size() gives 261
