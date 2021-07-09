@@ -82,7 +82,8 @@ int main(void) {
 	/* cout<<"Enter the m_vertices: ";
 	cin>>m_vertices; */
 	m_vertices = 6;
-	int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6}, {1,2,3,4,5}};
+	int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6},
+	 {1,2,3,5,6}, {1,2,6,3,4}, {1,2,5,3,4}};
 	int new_clock[m_vertices][m_vertices-1];
 	memset( new_clock, 0, m_vertices*(m_vertices-1)*sizeof(int) );
 	/* cout<<"Enter the type size: ";
@@ -268,7 +269,7 @@ int main(void) {
 				cout << endl;
 			}
 			cout << endl;
-	} 
+	}
 
 	// To populate `matrices_in_type_matrix`
 	for(i = 0; i < type_matrices.size(); i++) {
