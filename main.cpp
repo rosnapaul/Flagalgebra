@@ -82,15 +82,29 @@ int main(void) {
 	/* cout<<"Enter the m_vertices: ";
 	cin>>m_vertices; */
 	m_vertices = 6;
-	int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6},
-	 {1,2,3,5,6}, {1,2,6,3,4}, {1,2,5,3,4}};
+	//int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,6,3,4}, {1,2,5,3,4}};
+	// To read from the `input.txt` file (reads only one matrix)
+	collection_of_matrices tmp = get_matrices("input.txt",1,m_vertices,m_vertices-1);
+	int rot_sys[m_vertices][m_vertices-1];
+	for(i = 0; i < 1; i++)
+		for(j = 0; j < tmp[i].size(); j++)
+			for(k = 0; k < tmp[i][j].size(); k++)
+				rot_sys[j][k] = tmp[i][j][k];
+
+	// To print the `rot_sys` matrix.
+	 for(i = 0; i < 6; i++) {
+		for(j = 0; j < 5; j++)
+			cout<<rot_sys[i][j]<<" ";
+		cout<<endl;
+	}
+
 	int new_clock[m_vertices][m_vertices-1];
 	memset( new_clock, 0, m_vertices*(m_vertices-1)*sizeof(int) );
 	/* cout<<"Enter the type size: ";
 	cin>>type_size; */
 	type_size = 5;
 	/* cout<<"Enter the rotation system: "<<endl;
- 	 for(i = 0; i < m_vertices; i++)
+ 	for(i = 0; i < m_vertices; i++)
 		for(j = 0; j < (m_vertices-1); j++)
 			cin>>rot_sys[i][j]; */
 
@@ -145,8 +159,8 @@ int main(void) {
 		}
 	}while(std::next_permutation(v,v+m_vertices));
 
-	/* // To print `classfication_of_permutation`
-	cout<<"Classification of Permutation:"<<endl;
+	// To print `classfication_of_permutation`
+	/* cout<<"Classification of Permutation:"<<endl;
 	for(int i=0; i<classification_of_permutation.size(); i++) {
 		cout<<"The bundle size "<<i+1<<": "<<endl;
 		for(int j=0; j<classification_of_permutation[i].size(); j++) {
@@ -258,7 +272,7 @@ int main(void) {
 	collection_of_matrices type_matrices = get_matrices("file5vertices.txt",6,5,4);
 
 	// To print the `type_matrices`
-	cout<<"Type Matrices:"<<endl;
+	/* cout<<"Type Matrices:"<<endl;
 	int counter = 0;
 	for(i = 0; i < type_matrices.size(); i++) {
 			cout<<"Type Matrix "<<++counter<<":"<<endl;
@@ -269,7 +283,7 @@ int main(void) {
 				cout << endl;
 			}
 			cout << endl;
-	}
+	}*/
 
 	// To populate `matrices_in_type_matrix`
 	for(i = 0; i < type_matrices.size(); i++) {
@@ -299,7 +313,7 @@ int main(void) {
 			}
 		}
 	}
-	// To write output type matrices to `output` folder
+	// To write the all matrices present in type matrices as separate file in `output` folder
   for(i = 0; i < matrices_in_type_matrix.size(); i++) {
   	ofstream outfile;
   	stringstream filename;
@@ -316,7 +330,7 @@ int main(void) {
 		}
 		 outfile.close();
 	}
-
+	// To print the all matrices present in type matrices
 	for(i = 0; i < matrices_in_type_matrix.size(); i++) {
 		cout<<"Matrices in Type "<<(i + 1)<<":"<<endl;
 		for(j = 0; j < matrices_in_type_matrix[i].size(); j++) {
