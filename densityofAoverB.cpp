@@ -33,6 +33,7 @@
 #include<algorithm>
 #include <stdio.h>
 #include <string.h>
+#include"read_matrix.h"
 using namespace std;
 
 typedef vector<int> row;
@@ -122,14 +123,14 @@ int main() {
 	
 	std::sort(v,v+m_vertices);
 	// Collecting the Rotation System, this is the big rotation system . 
-	matrix rot_sys {
-		{2, 3, 4 ,5, 6, 7}, 
-		{1, 3, 4, 5, 7, 6}, 
-		{1, 2, 6, 4, 5, 7}, 
-		{1, 2, 3, 6, 5, 7}, 
-		{1, 2, 3, 4, 6, 7}, 
-		{1, 2, 7, 5, 4, 3}, 
-		{1, 6, 2, 3, 4, 5}}; 
+	//matrix rot_sys {{2, 3, 4 ,5, 6, 7},{1, 3, 4, 5, 7, 6},{1, 2, 6, 4, 5, 7},{1, 2, 3, 6, 5, 7},{1, 2, 3, 4, 6, 7},{1, 2, 7, 5, 4, 3},{1, 6, 2, 3, 4, 5}}; 
+	vector_matrix tmp = get_matrices("densityofAoverB_input.txt",1,m_vertices,m_vertices-1);
+	matrix rot_sys = tmp[0];
+	for(i = 0; i < m_vertices; i++) {
+		for(j = 0; j < (m_vertices-1); j++)
+			cout<<rot_sys[i][j]<<" ";
+		cout<<endl;
+	}
 	// TODO: collect the rotation system from the file.
 	/* cout<<"Enter the rotation system"<<endl; 
 	for(i = 0; i < m_vertices; i++) {

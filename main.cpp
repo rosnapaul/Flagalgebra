@@ -92,8 +92,8 @@ int main(void) {
 				rot_sys[j][k] = tmp[i][j][k];
 
 	// To print the `rot_sys` matrix.
-	 for(i = 0; i < 6; i++) {
-		for(j = 0; j < 5; j++)
+	for(i = 0; i < m_vertices; i++) {
+		for(j = 0; j < (m_vertices-1); j++)
 			cout<<rot_sys[i][j]<<" ";
 		cout<<endl;
 	}
