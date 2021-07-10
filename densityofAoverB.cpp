@@ -25,10 +25,6 @@
 // if the first 4 vertices are fixed, then we dont have to bother about the remaining (3! is extra) and first four vertices is reapeating in 7!. Total we need only 35 cases out of 7!=5040.
 // But since we also counting reverse rotation system, our base os in 70. So we have to divide our count by 72 (since 5040/72 = 70)
 // This count gives us the density.
-
-
-
-
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -85,8 +81,6 @@ int search_in_array(int v[], int s, int l) {
 	return 0;
 }	
 
-
-
 bool_array compare_with_given_matrix(vector_matrix matrices, matrix given_matrix) {
 	bool_array temp;
 	for(int matrix=0; matrix<matrices.size(); matrix++) {
@@ -122,28 +116,21 @@ int main() {
 	smallsize = 4; //TODO ask  size of the small matrix later
 	matrix min, new_mat;
 	vector_matrix compmat;
- int matcount =0;
+	int matcount = 0;
 
-		
 	int v[] = {1,2,3,4,5,6,7,8,9,10,11,12,13};
 	
 	std::sort(v,v+m_vertices);
-	
-
 	// Collecting the Rotation System, this is the big rotation system . 
-	matrix rot_sys {{2, 3, 4 ,5, 6, 7}, 
+	matrix rot_sys {
+		{2, 3, 4 ,5, 6, 7}, 
 		{1, 3, 4, 5, 7, 6}, 
-			{1, 2, 6, 4, 5, 7}, 
-				{1, 2, 3, 6, 5, 7}, 
-					{1, 2, 3, 4, 6, 7}, 
-						{1, 2, 7, 5, 4, 3}, 
-	{1, 6, 2, 3, 4, 5}}; 
-	
-	
+		{1, 2, 6, 4, 5, 7}, 
+		{1, 2, 3, 6, 5, 7}, 
+		{1, 2, 3, 4, 6, 7}, 
+		{1, 2, 7, 5, 4, 3}, 
+		{1, 6, 2, 3, 4, 5}}; 
 	// TODO: collect the rotation system from the file.
-	
-	
-	
 	/* cout<<"Enter the rotation system"<<endl; 
 	for(i = 0; i < m_vertices; i++) {
 		row temp1;
@@ -153,91 +140,61 @@ int main() {
         }
 		rot_sys.push_back(temp1);
    	} */
-	
 
-	
 	//  Relabeling of the Vertices corresponding to combination
-	
-	
-	        
+   	do{
+		matrix change_mat;
+		for(l = 0; l <m_vertices; l++) { // we avoid the extra rows in the big matrix
+		     
+			row temp3;
+			for(m = 0; m < m_vertices-1; m++) {
+				k = search_in_array(v, rot_sys[v[l]-1][m], m_vertices);
 				
+				temp3.push_back(k);
+			}
+			change_mat.push_back(temp3);
+		}
+		compmat.push_back(change_mat);
+		matcount++;
+	}while(std::next_permutation(v,v+m_vertices));
+			
+	rotating_array(compmat, m_vertices);
 
-   			do{
-				   matrix change_mat;
-			for(l = 0; l <m_vertices; l++) { // we avoid the extra rows in the big matrix
-			     
-				row temp3;
-				for(m = 0; m < m_vertices-1; m++) {
-					k = search_in_array(v, rot_sys[v[l]-1][m], m_vertices);
-					
-					temp3.push_back(k);
-				}
-				change_mat.push_back(temp3);
-			} 
-			     compmat.push_back(change_mat);
-				 
-				 matcount++;
-			}while(std::next_permutation(v,v+m_vertices));
+	int f_1[smallsize], f_2[smallsize];
 			
-			rotating_array(compmat, m_vertices); 
-			
-			
-			
-			int f_1[smallsize], f_2[smallsize];
-			
-			for(i=0;i<smallsize;i++){
-				f_1[i]=0;
-				f_2[i]=0;
-				cout<<f_1[i]<<f_2[i];
-			}	
-			
-			
-			cout<<endl;
-			
+	for(i=0;i<smallsize;i++){
+		f_1[i]=0;
+		f_2[i]=0;
+		cout<<f_1[i]<<f_2[i];
+	}	
+	cout<<endl;
+	matrix F_1 = {{2,3,4}, {1,4,3}, {1,2,4}, {1,3,2}};
+	//changed matrix
+	//TODO: no need to print these!!
+	vector_matrix pruned_matrices_1;
+	//cout<<"The first changed matrix is"<<endl;
+	for(k = 0; k < compmat.size(); k++) {
 		
-
-			matrix F_1 = {{2,3,4}, {1,4,3}, {1,2,4}, {1,3,2}};
-			
-			//changed matrix
-			//TODO: no need to print these!!
-			vector_matrix pruned_matrices_1;
-			cout<<"The first changed matrix is"<<endl;
-			for(k = 0; k < compmat.size(); k++) {
-				
-				matrix temp_matrix;
-				
-					for(i = 0; i < smallsize; i++) {
-					row temp_row;
-				
-					for(j=0;j<compmat[k][i].size();j++) {
-						if(compmat[k][i][j] > smallsize) continue;
-						cout<<compmat[k][i][j]<<" ";
-						temp_row.push_back(compmat[k][i][j]);
-					}
-					cout<<endl;
-					temp_matrix.push_back(temp_row);
-				}
-				cout<<endl;
-				pruned_matrices_1.push_back(temp_matrix);
-			}      
-
-
-
-      
-			bool_array first_comparison = compare_with_given_matrix(pruned_matrices_1,F_1);
-			
+		matrix temp_matrix;
 		
-			
+			for(i = 0; i < smallsize; i++) {
+			row temp_row;
 		
-		
-		
+			for(j=0;j<compmat[k][i].size();j++) {
+				if(compmat[k][i][j] > smallsize) continue;
+				//cout<<compmat[k][i][j]<<" ";
+				temp_row.push_back(compmat[k][i][j]);
+			}
+			//cout<<endl;
+			temp_matrix.push_back(temp_row);
+		}
+		//cout<<endl;
+		pruned_matrices_1.push_back(temp_matrix);
+	}
 
-			cout<<"Count of Similar Matrices are: "<<(count_of_same_matrices(first_comparison))/72<<endl;
-			
-		 cout<<"The total count is "<<matcount<<endl;
-	
-	
-	
+	bool_array first_comparison = compare_with_given_matrix(pruned_matrices_1,F_1);
 
+	cout<<"Count of Similar Matrices are: "<<(count_of_same_matrices(first_comparison))/72<<endl;
+	cout<<"The total count is "<<matcount<<endl;
 	return 0;
-}	
+}
