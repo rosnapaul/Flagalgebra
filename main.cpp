@@ -299,7 +299,23 @@ int main(void) {
 			}
 		}
 	}
-
+	// To write output type matrices to `output` folder
+  for(i = 0; i < matrices_in_type_matrix.size(); i++) {
+  	ofstream outfile;
+  	stringstream filename;
+  	filename<<"./output/type"+std::to_string(i+1)+".txt";
+  	outfile.open(filename.str().c_str(), ofstream::out);
+		for(j = 0; j < matrices_in_type_matrix[i].size(); j++) {
+			for(k = 0; k < matrices_in_type_matrix[i][j].size(); k++) {
+				for(l = 0; l < matrices_in_type_matrix[i][j][k].size(); l++) {
+					outfile<<matrices_in_type_matrix[i][j][k][l]<<" ";
+				}
+				outfile<<endl;
+			}
+			outfile<<endl;
+		}
+		 outfile.close();
+	}
 
 	for(i = 0; i < matrices_in_type_matrix.size(); i++) {
 		cout<<"Matrices in Type "<<(i + 1)<<":"<<endl;
