@@ -330,6 +330,7 @@ int main(void) {
 		}
 		 outfile.close();
 	}
+	write_info("./output/info.txt",matrices_in_type_matrix);
 	// To print the all matrices present in type matrices
 	for(i = 0; i < matrices_in_type_matrix.size(); i++) {
 		cout<<"Matrices in Type "<<(i + 1)<<":"<<endl;

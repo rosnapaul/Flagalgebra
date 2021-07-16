@@ -9,6 +9,7 @@ using namespace std;
 typedef vector<int> row;
 typedef vector<vector<int>> collection_of_rows;
 typedef vector<vector<vector<int>>> collection_of_matrices;
+typedef vector<vector<vector<vector<int>>>> collection_of_collection_of_matrices;
 
 inline collection_of_matrices get_matrices(string filename,unsigned short NO_OF_MATRICES,unsigned short MATRIX_ROW_SIZE,unsigned short MATRIX_COLUMN_SIZE) {
     collection_of_matrices matrices;
@@ -32,6 +33,37 @@ inline collection_of_matrices get_matrices(string filename,unsigned short NO_OF_
     }
     infile.close();
     return matrices;
+}
+
+inline void write_info(string file_dir,collection_of_collection_of_matrices data) {
+    ofstream outfile;
+    stringstream filename;
+    filename<<file_dir+"info.txt";
+    outfile.open(filename.str().c_str(), ofstream::out);
+    outfile<<data.size()<<" ";
+    for(int i = 0; i < data.size(); i++) {
+        outfile<<data[i].size()<<" ";
+    } 
+    outfile<<endl;
+    for(int i = 0; i < data.size(); i++) {
+        if(data[i].size()) {
+            outfile<<data[i][0].size()<<" "<<data[i][0][0].size();
+            break;
+        }
+    }
+    outfile.close();
+}
+
+inline row read_info(string file_dir) {
+    unsigned char temp_char;
+    ifstream infile;
+    infile.open(file_dir); // To read the file
+    row temp_row;
+    infile >> temp_char;
+    temp = (int) temp_char - 48; // To Convert ASCII Number to Digit
+    temp_row.push_back(temp);
+    infile.close();
+    return temp_row;
 }
 
 #endif

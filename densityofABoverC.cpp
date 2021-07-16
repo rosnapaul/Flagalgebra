@@ -114,6 +114,20 @@ int count_of_same_matrices(bool_array A, bool_array B) {
 	return count;
 }
 
+row read_info(string filename) {
+    unsigned char temp_char;
+    ifstream infile;
+    infile.open(filename); // To read the file
+    row temp_row;
+    do {
+    	infile >> temp_char;
+	    int temp = (int) temp_char - 48; // To Convert ASCII Number to Digit
+	    temp_row.push_back(temp);
+    }while(infile!=EOF);
+    infile.close();
+    return temp_row;
+}
+
 int main() {
 	int m_vertices,i,j,k,l,m,dummy,r,type_size;
 	cout<<"Enter the number of vertices"<<endl;
@@ -192,6 +206,14 @@ int main() {
 			//matrix F_1 = {{2,3,4,5}, {1,3,4,5}, {1,2,4,5}, {1,2,3,5}, {1,2,3,4}};
 			//matrix F_2 = {{2,3,4,5}, {1,3,4,5}, {1,2,4,5}, {1,2,3,5}, {1,2,3,4}};
 			
+
+			// To read from type matrices
+			row info = read_info("./output/info.txt");
+			for(int i = 0; i < info.size(); i++) {
+				cout<<info[i]<<" ";
+			}
+			cout<<endl;
+
 			matrix F_1 = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6},{1,2,3,4,5}};
 			matrix F_2 = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6},{1,2,3,4,5}};
 			
