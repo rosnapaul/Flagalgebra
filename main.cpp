@@ -13,9 +13,9 @@
 using namespace std;
 
 typedef vector<int> row;
-typedef vector<vector<int>> collection_of_rows;
-typedef vector<vector<vector<int>>> collection_of_matrices;
-typedef vector<vector<vector<vector<int>>>> collection_of_collection_of_matrices;
+typedef vector<vector<int> > collection_of_rows;
+typedef vector<vector<vector<int> > > collection_of_matrices;
+typedef vector<vector<vector <vector<int> > > > collection_of_collection_of_matrices;
 
 collection_of_collection_of_matrices classification_of_permutation, matrices_in_type_matrix;
 collection_of_matrices matrices,lexicographic_min,pruned_lexico_min;
@@ -35,7 +35,7 @@ int factorial(int n) {
 	return (n == 1 || n == 0) ? 1 : n * factorial(n-1);
 }
 
-void lexicomini_of(vector<vector<vector<int>>> compmat, vector<vector<int>> &min) {
+void lexicomini_of(vector<vector<vector<int> > > compmat, vector<vector<int> > &min) {
 	bool flag = false;
 	for(int k = 0; k < compmat.size(); k++) {
 		flag = false;
