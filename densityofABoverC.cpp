@@ -22,9 +22,6 @@
 // compare these submatrices it with the given flags A and B. If the first submatrix matches with A and the second submatrix matches with B then we count it. 
 // This count divided by the total number of combinations gives the densty of A over B.
 
-
-
-
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -47,7 +44,7 @@ int lowestinarray(vector<int> arow) {
 	for(int i = 0; i < arow.size(); i++)
 		if(arow[i] < lowest_ele){
 			lowest_ele = arow[i];
-	        k = i;
+	    k = i;
 		}
 	return k;
 }
@@ -56,7 +53,7 @@ void rotating_array(vector<vector<vector<int> > > &compmat, int m_vertices) {
 	int mini_position;
 	int r,rotate_copy[compmat.size()][m_vertices-1];
 	for(int k = 0; k < compmat.size(); k++) {
-	   for(int i = 0; i < compmat[k].size(); i++) {          
+		for(int i = 0; i < compmat[k].size(); i++) {          
 			mini_position = lowestinarray(compmat[k][i]);
 			for(int j = 0; j < compmat[k][i].size(); j++) {
 				r = (mini_position + j) % (m_vertices - 1);
@@ -71,7 +68,7 @@ void rotating_array(vector<vector<vector<int> > > &compmat, int m_vertices) {
 int search_in_vector(vector<int> some_row, int s) {
 	for(int i = 0; i < some_row.size(); i++)
 		if(some_row[i] == s)
-		   return i;
+		  return i;
 	return 0;
 }
 
@@ -81,8 +78,6 @@ int search_in_array(int v[], int s, int l) {
 			return i+1;
 	return 0;
 }	
-
-
 
 bool_array compare_with_given_matrix(vector_matrix matrices, matrix given_matrix) {
 	bool_array temp;
@@ -116,10 +111,10 @@ int count_of_same_matrices(bool_array A, bool_array B) {
 }
 
 row read_info(string filename) {
-    char temp_char;
-    ifstream infile;
-    infile.open(filename); // To read the file
-    row temp_row;
+	char temp_char;
+	ifstream infile;
+	infile.open(filename); // To read the file
+	row temp_row;
 	int temp = 0;
 	while(infile.get(temp_char) && temp_char != '\n') {
 		if(temp_char == ' ') {
@@ -129,8 +124,8 @@ row read_info(string filename) {
 		}
 		temp = (temp * 10) + (temp_char - '0');
 	}
-    infile.close();
-    return temp_row;
+	infile.close();
+	return temp_row;
 }
 
 int main() {
@@ -141,12 +136,8 @@ int main() {
 	matrix min, new_mat;
 	vector_matrix compmat;
 
-
-		
 	int v[] = {1,2,3,4,5,6,7,8,9,10,11,12,13};
-	
 	std::sort(v,v+m_vertices);
-	
 
 	// Collecting the Rotation System, this is the big rotation system . 
 	matrix rot_sys {{2,3,4,5,6,7}, {1,3,4,5,6,7}, {1,2,4,5,6,7}, {1,2,3,5,6,7}, {1,2,3,4,6,7}, {1,2,3,4,5,7}, {1,2,3,4,5,6}};
@@ -156,131 +147,95 @@ int main() {
 		for(j = 0; j < (m_vertices - 1); j++) {
 			cin>>k;
 			temp1.push_back(k);
-        }
+    }
 		rot_sys.push_back(temp1);
-   	} */
-	
-
+  } */
 	
 	//  Relabeling of the Vertices corresponding to combination
+	do{
+		matrix change_mat;
+		for(l = 0; l <m_vertices; l++) { // we avoid the extra rows in the big matrix	
+			row temp3;
+			for(m = 0; m < m_vertices-1; m++) {
+				k = search_in_array(v, rot_sys[v[l]-1][m], m_vertices);
+				temp3.push_back(k);
+			}
+			change_mat.push_back(temp3);
+		} 
+		compmat.push_back(change_mat);
+	}while(std::next_permutation(v,v+m_vertices));
+			
+	rotating_array(compmat, m_vertices); 
 	
+	int extra_vert, flagsize;
+	extra_vert = (m_vertices - type_size)/2;
+	//cout<<"extr vert"<<extra_vert<<endl;
+	flagsize = type_size+extra_vert;
+	//cout<<"flagsize"<<flagsize<<endl;
+	int f_1[flagsize], f_2[flagsize];
 	
-	        
-				
+	for(i=0;i<flagsize;i++){
+		f_1[i]=0;
+		f_2[i]=0;
+		cout<<f_1[i]<<f_2[i];
+	}
+	cout<<endl;
+	//TODo: make this program in such a way that the matrices F_1 and F_2 are automatically collected from the file.
+	// we use flags only of the same type.
+	// may be we can add some steps to check whether the flags are coming from the same type.
 
-   			do{
-				   matrix change_mat;
-			for(l = 0; l <m_vertices; l++) { // we avoid the extra rows in the big matrix
-			     
-				row temp3;
-				for(m = 0; m < m_vertices-1; m++) {
-					k = search_in_array(v, rot_sys[v[l]-1][m], m_vertices);
-					
-					temp3.push_back(k);
-				}
-				change_mat.push_back(temp3);
-			} 
-			     compmat.push_back(change_mat);
-				 
-				 
-			}while(std::next_permutation(v,v+m_vertices));
-			
-			rotating_array(compmat, m_vertices); 
-			
-			int extra_vert, flagsize;
-			extra_vert = (m_vertices - type_size)/2;
-			//cout<<"extr vert"<<extra_vert<<endl;
-			flagsize = type_size+extra_vert;
-			//cout<<"flagsize"<<flagsize<<endl;
-			
-			int f_1[flagsize], f_2[flagsize];
-			
-			for(i=0;i<flagsize;i++){
-				f_1[i]=0;
-				f_2[i]=0;
-				cout<<f_1[i]<<f_2[i];
-			}	
-			
-			
-			cout<<endl;
-			
-			//TODo: make this program in such a way that the matrices F_1 and F_2 are automatically collected from the file.
-			// we use flags only of the same type.
-			// may be we can add some steps to check whether the flags are coming from the same type.
+	//matrix F_1 = {{2,3,4,5}, {1,3,4,5}, {1,2,4,5}, {1,2,3,5}, {1,2,3,4}};
+	//matrix F_2 = {{2,3,4,5}, {1,3,4,5}, {1,2,4,5}, {1,2,3,5}, {1,2,3,4}};
+	
+	// To read from type matrices
+	row info = read_info("./output/info.txt");
+	for(int i = 0; i < info.size(); i++) {
+		cout<<info[i]<<" ";
+	}
+	cout<<endl;
 
-			//matrix F_1 = {{2,3,4,5}, {1,3,4,5}, {1,2,4,5}, {1,2,3,5}, {1,2,3,4}};
-			//matrix F_2 = {{2,3,4,5}, {1,3,4,5}, {1,2,4,5}, {1,2,3,5}, {1,2,3,4}};
-			
-
-			// To read from type matrices
-			row info = read_info("./output/info.txt");
-			for(int i = 0; i < info.size(); i++) {
-				cout<<info[i]<<" ";
+	matrix F_1 {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6},{1,2,3,4,5}};
+	matrix F_2 {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6},{1,2,3,4,5}};
+	// Just to see the changed matrix.
+	vector_matrix pruned_matrices_1;
+	cout<<"The first changed matrix is"<<endl;
+	for(k = 0; k < compmat.size(); k++) {
+		matrix temp_matrix;
+		for(i = 0; i < flagsize; i++) {
+			row temp_row;
+			for(j=0;j<compmat[k][i].size();j++) {
+				if(compmat[k][i][j] > flagsize) continue;
+				cout<<compmat[k][i][j]<<" ";
+				temp_row.push_back(compmat[k][i][j]);
 			}
 			cout<<endl;
-
-			matrix F_1 {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6},{1,2,3,4,5}};
-			matrix F_2 {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6},{1,2,3,4,5}};
-			
-			//matrix F_2 = {{2,3,4,5,6}, {1,6,3,4,5}, {1,6,2,4,5}, {1,6,2,3,5}, {1,6,2,3,4}, {1,2,3,4,5}};
-			
-			
-			
-			// Just to see the changed matrix.
-			vector_matrix pruned_matrices_1;
-			cout<<"The first changed matrix is"<<endl;
-			for(k = 0; k < compmat.size(); k++) {
-				
-				matrix temp_matrix;
-				
-					for(i = 0; i < flagsize; i++) {
-					row temp_row;
-				
-					for(j=0;j<compmat[k][i].size();j++) {
-						if(compmat[k][i][j] > flagsize) continue;
-						cout<<compmat[k][i][j]<<" ";
-						temp_row.push_back(compmat[k][i][j]);
-					}
-					cout<<endl;
-					temp_matrix.push_back(temp_row);
-				}
-				cout<<endl;
-				pruned_matrices_1.push_back(temp_matrix);
-			}      
-
-
-
-      
-			bool_array first_comparison = compare_with_given_matrix(pruned_matrices_1,F_1);
-			
-		
-			
-		
-			// Just to see the changed matrix.
-			vector_matrix pruned_matrices_2;
-			cout<<"The second changed matrix is"<<endl;
-			for(k = 0; k < compmat.size(); k++) {
-				
-				matrix temp_matrix;
-				for(i = 0; i < compmat[k].size(); i++) {
-					row temp_row;
-					if ((type_size<=(i%m_vertices) ) && ((i%m_vertices) < flagsize))continue;
-					
-					
-					for(j=0;j<compmat[k][i].size();j++) {
-						if ((type_size<(compmat[k][i][j]) ) && ((compmat[k][i][j]) < (flagsize+1))) continue;
-						if (compmat[k][i][j] > flagsize) 
-							compmat[k][i][j] = compmat[k][i][j] - extra_vert;
-						cout<<compmat[k][i][j]<<" "; 
-						temp_row.push_back(compmat[k][i][j]);
-					}
-					cout<<endl;
-					temp_matrix.push_back(temp_row);
-				}
-				cout<<endl;
-				pruned_matrices_2.push_back(temp_matrix);
+			temp_matrix.push_back(temp_row);
+		}
+		cout<<endl;
+		pruned_matrices_1.push_back(temp_matrix);
+	}      
+	bool_array first_comparison = compare_with_given_matrix(pruned_matrices_1,F_1);
+	// Just to see the changed matrix.
+	vector_matrix pruned_matrices_2;
+	cout<<"The second changed matrix is"<<endl;
+	for(k = 0; k < compmat.size(); k++) {
+		matrix temp_matrix;
+		for(i = 0; i < compmat[k].size(); i++) {
+			row temp_row;
+			if((type_size <= (i % m_vertices)) && ((i % m_vertices) < flagsize)) continue;
+			for(j=0;j<compmat[k][i].size();j++) {
+				if((type_size < (compmat[k][i][j])) && ((compmat[k][i][j]) < (flagsize+1))) continue;
+				if(compmat[k][i][j] > flagsize) compmat[k][i][j] = compmat[k][i][j] - extra_vert;
+				cout<<compmat[k][i][j]<<" "; 
+				temp_row.push_back(compmat[k][i][j]);
 			}
-			bool_array second_comparison = compare_with_given_matrix(pruned_matrices_2,F_2);
-			cout<<"Count of Similar Matrices are: "<<count_of_same_matrices(first_comparison, second_comparison)<<endl;
+			cout<<endl;
+			temp_matrix.push_back(temp_row);
+		}
+		cout<<endl;
+		pruned_matrices_2.push_back(temp_matrix);
+	}
+	bool_array second_comparison = compare_with_given_matrix(pruned_matrices_2,F_2);
+	cout<<"Count of Similar Matrices are: "<<count_of_same_matrices(first_comparison, second_comparison)<<endl;
 	return 0;
-}	
+}
