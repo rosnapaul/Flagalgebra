@@ -82,24 +82,6 @@ int main(void) {
 	/* cout<<"Enter the m_vertices: ";
 	cin>>m_vertices; */
 	m_vertices = 6;
-	//int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,6,3,4}, {1,2,5,3,4}};
-	// To read from the `input.txt` file (reads only one matrix)
-	collection_of_matrices tmp = get_matrices("input.txt",2,m_vertices,m_vertices-1);
-	int rot_sys[m_vertices][m_vertices-1];
-	for(i = 1; i < 2; i++)
-		for(j = 0; j < tmp[i].size(); j++)
-			for(k = 0; k < tmp[i][j].size(); k++)
-				rot_sys[j][k] = tmp[i][j][k];
-
-	// To print the `rot_sys` matrix.
-	for(i = 0; i < m_vertices; i++) {
-		for(j = 0; j < (m_vertices-1); j++)
-			cout<<rot_sys[i][j]<<" ";
-		cout<<endl;
-	}
-
-	int new_clock[m_vertices][m_vertices-1];
-	memset( new_clock, 0, m_vertices*(m_vertices-1)*sizeof(int) );
 	/* cout<<"Enter the type size: ";
 	cin>>type_size; */
 	type_size = 5;
@@ -107,14 +89,30 @@ int main(void) {
  	for(i = 0; i < m_vertices; i++)
 		for(j = 0; j < (m_vertices-1); j++)
 			cin>>rot_sys[i][j]; */
-
 	int v[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+	//int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,6,3,4}, {1,2,5,3,4}};
+	// To read from the `input.txt` file (reads only one matrix)
+	collection_of_matrices tmp = get_matrices("input.txt",165,m_vertices,m_vertices-1);
+	int rot_sys[m_vertices][m_vertices-1];
+	for(i = 1; i < 2; i++)
+		for(j = 0; j < tmp[i].size(); j++)
+			for(k = 0; k < tmp[i][j].size(); k++)
+				rot_sys[j][k] = tmp[i][j][k];
+
+	// To print the `rot_sys` matrix.
+/* 	for(i = 0; i < m_vertices; i++) {
+		for(j = 0; j < (m_vertices-1); j++)
+			cout<<rot_sys[i][j]<<" ";
+		cout<<endl;
+	} */
+
+	int new_clock[m_vertices][m_vertices-1];
+	memset( new_clock, 0, m_vertices*(m_vertices-1)*sizeof(int) );
 
 	std::sort(v, v+m_vertices);
 
 	int final_bundle_size = factorial(m_vertices - type_size);
 
-	cout<<"The size of the bundles "<< final_bundle_size<<endl;
 
 	int num_bundle = 1, bundle_size = 1;
 
