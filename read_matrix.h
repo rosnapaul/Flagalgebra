@@ -41,17 +41,10 @@ inline void write_info(string file_dir,collection_of_collection_of_matrices data
 	stringstream filename;
 	filename<<file_dir+"info.txt";
 	outfile.open(filename.str().c_str(), ofstream::out);
-	outfile<<data.size()<<" ";
 	for(int i = 0; i < data.size(); i++) {
 		outfile<<data[i].size()<<" ";
 	} 
 	outfile<<endl;
-	for(int i = 0; i < data.size(); i++) {
-		if(data[i].size()) {
-			outfile<<data[i][0].size()<<" "<<data[i][0][0].size();
-			break;
-		}
-	}
 	outfile.close();
 }
 

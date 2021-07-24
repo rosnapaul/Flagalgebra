@@ -31,14 +31,15 @@
 #include<vector>
 #include<math.h>
 #include<algorithm>
-#include <stdio.h>
-#include <string.h>
+#include<stdio.h>
+#include<string.h>
+#include<sstream>
 using namespace std;
 
 typedef vector<int> row;
 typedef vector<bool> bool_array;
-typedef vector<vector<int>> matrix;
-typedef vector<vector<vector<int>>> vector_matrix;
+typedef vector<vector<int> > matrix;
+typedef vector<vector<vector<int> > > vector_matrix;
 
 int lowestinarray(vector<int> arow) {
 	int lowest_ele,k = 0;
@@ -51,7 +52,7 @@ int lowestinarray(vector<int> arow) {
 	return k;
 }
 
-void rotating_array(vector<vector<vector<int>>> &compmat, int m_vertices) {
+void rotating_array(vector<vector<vector<int> > > &compmat, int m_vertices) {
 	int mini_position;
 	int r,rotate_copy[compmat.size()][m_vertices-1];
 	for(int k = 0; k < compmat.size(); k++) {
@@ -115,15 +116,19 @@ int count_of_same_matrices(bool_array A, bool_array B) {
 }
 
 row read_info(string filename) {
-    unsigned char temp_char;
+    char temp_char;
     ifstream infile;
     infile.open(filename); // To read the file
     row temp_row;
-    do {
-    	infile >> temp_char;
-	    int temp = (int) temp_char - 48; // To Convert ASCII Number to Digit
-	    temp_row.push_back(temp);
-    }while(infile!=EOF);
+	int temp = 0;
+	while(infile.get(temp_char) && temp_char != '\n') {
+		if(temp_char == ' ') {
+			temp_row.push_back(temp);
+			temp = 0;
+			continue;
+		}
+		temp = (temp * 10) + (temp_char - '0');
+	}
     infile.close();
     return temp_row;
 }
@@ -214,8 +219,8 @@ int main() {
 			}
 			cout<<endl;
 
-			matrix F_1 = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6},{1,2,3,4,5}};
-			matrix F_2 = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6},{1,2,3,4,5}};
+			matrix F_1 {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6},{1,2,3,4,5}};
+			matrix F_2 {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6},{1,2,3,4,5}};
 			
 			//matrix F_2 = {{2,3,4,5,6}, {1,6,3,4,5}, {1,6,2,4,5}, {1,6,2,3,5}, {1,6,2,3,4}, {1,2,3,4,5}};
 			
@@ -274,19 +279,8 @@ int main() {
 				}
 				cout<<endl;
 				pruned_matrices_2.push_back(temp_matrix);
-			}		
-			
-			
+			}
 			bool_array second_comparison = compare_with_given_matrix(pruned_matrices_2,F_2);
-
-		
-
 			cout<<"Count of Similar Matrices are: "<<count_of_same_matrices(first_comparison, second_comparison)<<endl;
-			
-		
-	
-	
-	
-
 	return 0;
 }	
