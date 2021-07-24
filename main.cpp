@@ -85,33 +85,28 @@ int main(void) {
 	//int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,6,3,4}, {1,2,5,3,4}};
 	// To read from the `input.txt` file (reads only one matrix)
 	collection_of_matrices tmp = get_matrices("input.txt",1,m_vertices,m_vertices-1);
-	collection_of_rows rot_sys;
+	int rot_sys[m_vertices][m_vertices-1];
 	for(i = 0; i < 1; i++)
-  for(j = 0; j < tmp[i].size(); j++){
-		   row temp_rot;
-			for(k = 0; k < tmp[i][j].size(); k++){
-				temp_rot.push_back(tmp[i][j][k]);
-			}
-			rot_sys.push_back(temp_rot);
-		}
-  cout<<"hello";
-				for(j = 0; j < tmp[i].size(); j++){
-					for(k = 0; k < tmp[i][j].size(); k++)
-						cout<<tmp[i][j][k]<<" ";
-						cout<<endl;
-					}
+		for(j = 0; j < tmp[i].size(); j++)
+			for(k = 0; k < tmp[i][j].size(); k++)
+				rot_sys[j][k] = tmp[i][j][k];
+
 	// To print the `rot_sys` matrix.
-	for(i = 0; i < rot_sys.size(); i++) {
-		for(j = 0; j < rot_sys[i].size(); j++)
+	for(i = 0; i < m_vertices; i++) {
+		for(j = 0; j < (m_vertices-1); j++)
 			cout<<rot_sys[i][j]<<" ";
 		cout<<endl;
 	}
 
- /*
 	int new_clock[m_vertices][m_vertices-1];
 	memset( new_clock, 0, m_vertices*(m_vertices-1)*sizeof(int) );
-
+	/* cout<<"Enter the type size: ";
+	cin>>type_size; */
 	type_size = 5;
+	/* cout<<"Enter the rotation system: "<<endl;
+ 	for(i = 0; i < m_vertices; i++)
+		for(j = 0; j < (m_vertices-1); j++)
+			cin>>rot_sys[i][j]; */
 
 	int v[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 
@@ -123,9 +118,11 @@ int main(void) {
 
 	int num_bundle = 1, bundle_size = 1;
 
-
 	do {
-
+		/* for(i = 0; i < m_vertices; i++) {
+				cout<<v[i]<<" ";
+		}
+		cout<<endl<<endl; */
 
 		dummy = search_in_array(rot_sys[v[0]-1], v[1], (m_vertices - 1));
 		for(i = 0; i < (m_vertices - 1); i++) {
@@ -162,7 +159,21 @@ int main(void) {
 		}
 	}while(std::next_permutation(v,v+m_vertices));
 
-
+	// To print `classfication_of_permutation`
+	/* cout<<"Classification of Permutation:"<<endl;
+	for(int i=0; i<classification_of_permutation.size(); i++) {
+		cout<<"The bundle size "<<i+1<<": "<<endl;
+		for(int j=0; j<classification_of_permutation[i].size(); j++) {
+			cout<<"Matrix "<<j+1<<": "<<endl;
+			for(int k=0; k<classification_of_permutation[i][j].size(); k++) {
+				for(int l=0; l<classification_of_permutation[i][j][k].size(); l++) {
+					cout<<classification_of_permutation[i][j][k][l]<<" ";
+				}
+				cout<<endl;
+			}
+			cout<<endl;
+		}
+	} */
 
 	for(int i=0; i<classification_of_permutation.size(); i++) {
 		if(classification_of_permutation[i].size() > 1) {
@@ -176,6 +187,19 @@ int main(void) {
 
 	}
 
+	// To print `lexicographic_min`
+	/*
+	cout<<"Lexicographic Minimum:"<<endl;
+	for(int i=0; i<lexicographic_min.size(); i++) {
+		cout<<"Matrix "<<i+1<<": "<<endl;
+		for(int j=0; j<lexicographic_min[i].size(); j++) {
+			for(int k=0; k<lexicographic_min[i][j].size(); k++) {
+				cout<<lexicographic_min[i][j][k]<<" ";
+			}
+			cout<<endl;
+		}
+		cout<<endl;
+	} */
 
 	// To prune the duplicates
 	for(unsigned int counter = 0; counter < lexicographic_min.size() - 1; counter++) {
@@ -200,6 +224,19 @@ int main(void) {
 		}
 	}
 
+	// To print the pruned matrices
+	/* cout<<"After Pruning:"<<endl;
+	int counter = 0;
+	for(i = 0; i < pruned_lexico_min.size(); i++) {
+			cout<<"Matrix "<<++counter<<":"<<endl;
+			for(j = 0; j < pruned_lexico_min[i].size(); j++) {
+				for(k = 0; k < pruned_lexico_min[i][j].size(); k++) {
+					cout << pruned_lexico_min[i][j][k] << " ";
+				}
+				cout << endl;
+			}
+			cout << endl;
+	} */
 
 	// To reduce the matrix
 	collection_of_matrices reduced_matrices;
@@ -217,12 +254,36 @@ int main(void) {
 			reduced_matrices.push_back(temp_matrix);
 	}
 
-
+	// To print reduced matrices
+	/* cout<<"After Reducing:"<<endl;
+	counter = 0;
+	for(i = 0; i < reduced_matrices.size(); i++) {
+			cout<<"Matrix "<<++counter<<":"<<endl;
+			for(j = 0; j < reduced_matrices[i].size(); j++) {
+				for(k = 0; k < reduced_matrices[i][j].size(); k++) {
+					cout << reduced_matrices[i][j][k] << " ";
+				}
+				cout << endl;
+			}
+			cout << endl;
+	} */
 
 	// To retrieve `type_matrices`
 	collection_of_matrices type_matrices = get_matrices("file5vertices.txt",6,5,4);
 
-
+	// To print the `type_matrices`
+	/* cout<<"Type Matrices:"<<endl;
+	int counter = 0;
+	for(i = 0; i < type_matrices.size(); i++) {
+			cout<<"Type Matrix "<<++counter<<":"<<endl;
+			for(j = 0; j < type_matrices[i].size(); j++) {
+				for(k = 0; k < type_matrices[i][j].size(); k++) {
+					cout << type_matrices[i][j][k] << " ";
+				}
+				cout << endl;
+			}
+			cout << endl;
+	}*/
 
 	// To populate `matrices_in_type_matrix`
 	for(i = 0; i < type_matrices.size(); i++) {
@@ -285,6 +346,5 @@ int main(void) {
 		}
 		cout<<endl;
 	}
-*/
 	return 0;
 }
