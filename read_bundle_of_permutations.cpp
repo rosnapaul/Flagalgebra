@@ -4,8 +4,8 @@
 using namespace std;
 
 typedef vector<int> row;
-typedef vector<vector<int>> collection_of_rows;
-typedef vector<vector<vector<int>>> collection_of_matrices;
+typedef vector<vector<int> > collection_of_rows;
+typedef vector<vector<vector<int> > > collection_of_matrices;
 
 const unsigned short NO_OF_MATRICES = 6;
 const unsigned short MATRIX_ROW_SIZE = 6;
@@ -38,7 +38,7 @@ collection_of_matrices get_matrices(int fileNumber) {
 	return matrices;
 }
 
-void lexicomini_of(vector<vector<vector<int>>> compmat, vector<vector<int>> &min) {
+void lexicomini_of(vector<vector<vector<int> > > compmat, vector<vector<int> > &min) {
 	bool flag = false;
 	for(int k = 0; k < compmat.size(); k++) {
 		flag = false;

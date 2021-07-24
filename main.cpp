@@ -84,9 +84,9 @@ int main(void) {
 	m_vertices = 6;
 	//int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,6,3,4}, {1,2,5,3,4}};
 	// To read from the `input.txt` file (reads only one matrix)
-	collection_of_matrices tmp = get_matrices("input.txt",1,m_vertices,m_vertices-1);
+	collection_of_matrices tmp = get_matrices("input.txt",2,m_vertices,m_vertices-1);
 	int rot_sys[m_vertices][m_vertices-1];
-	for(i = 0; i < 1; i++)
+	for(i = 1; i < 2; i++)
 		for(j = 0; j < tmp[i].size(); j++)
 			for(k = 0; k < tmp[i][j].size(); k++)
 				rot_sys[j][k] = tmp[i][j][k];
@@ -177,10 +177,8 @@ int main(void) {
 
 	for(int i=0; i<classification_of_permutation.size(); i++) {
 		if(classification_of_permutation[i].size() > 1) {
-			//for(int j=0; j<classification_of_permutation[i].size(); j++) {
-				lexicomini_of(classification_of_permutation[i], classification_of_permutation[i][0]);
-				lexicographic_min.push_back(classification_of_permutation[i][0]);
-			//}
+			lexicomini_of(classification_of_permutation[i], classification_of_permutation[i][0]);
+			lexicographic_min.push_back(classification_of_permutation[i][0]);
 		} else if(classification_of_permutation[i].size() == 1) {
 			lexicographic_min.push_back(classification_of_permutation[i][0]);
 		}
@@ -203,20 +201,20 @@ int main(void) {
 
 	// To prune the duplicates
 	for(unsigned int counter = 0; counter < lexicographic_min.size() - 1; counter++) {
-    	for(i = (counter + 1); i < lexicographic_min.size(); i++) {
-      		bool duplicate = true;
-      		for(j = 0; j < lexicographic_min[i].size(); j++) {
-        		for(k = 0; k < lexicographic_min[i][j].size(); k++) {
-          			if(lexicographic_min[i][j][k] != lexicographic_min[counter][j][k]) {
-            			duplicate = false;
-            			break;
-          			}
+		for(i = (counter + 1); i < lexicographic_min.size(); i++) {
+			bool duplicate = true;
+			for(j = 0; j < lexicographic_min[i].size(); j++) {
+				for(k = 0; k < lexicographic_min[i][j].size(); k++) {
+					if(lexicographic_min[i][j][k] != lexicographic_min[counter][j][k]) {
+						duplicate = false;
+						break;
+					}
 				}
-      		}
-    		if(duplicate && (i != counter) && (isDuplicate(i,duplicate_entries) == false)) {
-    			duplicate_entries.push_back(i);
-    		}
-    	}
+			}
+			if(duplicate && (i != counter) && (isDuplicate(i,duplicate_entries) == false)) {
+				duplicate_entries.push_back(i);
+			}
+		}
 	}
 	for(i = 0; i < lexicographic_min.size(); i++) {
 		if(isDuplicate(i,duplicate_entries) == false) {
@@ -241,31 +239,31 @@ int main(void) {
 	// To reduce the matrix
 	collection_of_matrices reduced_matrices;
 	for(i = 0; i < pruned_lexico_min.size(); i++) {
-			collection_of_rows temp_matrix;
-			for(j = 0; j < (pruned_lexico_min[i].size() - 1); j++) {
-				row temp_row;
-				for(k = 0; k < pruned_lexico_min[i][j].size(); k++) {
-					if(pruned_lexico_min[i][j][k] < (type_size + 1)) {
-						temp_row.push_back(pruned_lexico_min[i][j][k]);
-					}
+		collection_of_rows temp_matrix;
+		for(j = 0; j < (pruned_lexico_min[i].size() - 1); j++) {
+			row temp_row;
+			for(k = 0; k < pruned_lexico_min[i][j].size(); k++) {
+				if(pruned_lexico_min[i][j][k] < (type_size + 1)) {
+					temp_row.push_back(pruned_lexico_min[i][j][k]);
 				}
-				temp_matrix.push_back(temp_row);
 			}
-			reduced_matrices.push_back(temp_matrix);
+			temp_matrix.push_back(temp_row);
+		}
+		reduced_matrices.push_back(temp_matrix);
 	}
 
 	// To print reduced matrices
 	/* cout<<"After Reducing:"<<endl;
 	counter = 0;
 	for(i = 0; i < reduced_matrices.size(); i++) {
-			cout<<"Matrix "<<++counter<<":"<<endl;
-			for(j = 0; j < reduced_matrices[i].size(); j++) {
-				for(k = 0; k < reduced_matrices[i][j].size(); k++) {
-					cout << reduced_matrices[i][j][k] << " ";
-				}
-				cout << endl;
+		cout<<"Matrix "<<++counter<<":"<<endl;
+		for(j = 0; j < reduced_matrices[i].size(); j++) {
+			for(k = 0; k < reduced_matrices[i][j].size(); k++) {
+				cout << reduced_matrices[i][j][k] << " ";
 			}
 			cout << endl;
+		}
+		cout << endl;
 	} */
 
 	// To retrieve `type_matrices`
@@ -275,14 +273,14 @@ int main(void) {
 	/* cout<<"Type Matrices:"<<endl;
 	int counter = 0;
 	for(i = 0; i < type_matrices.size(); i++) {
-			cout<<"Type Matrix "<<++counter<<":"<<endl;
-			for(j = 0; j < type_matrices[i].size(); j++) {
-				for(k = 0; k < type_matrices[i][j].size(); k++) {
-					cout << type_matrices[i][j][k] << " ";
-				}
-				cout << endl;
+		cout<<"Type Matrix "<<++counter<<":"<<endl;
+		for(j = 0; j < type_matrices[i].size(); j++) {
+			for(k = 0; k < type_matrices[i][j].size(); k++) {
+				cout << type_matrices[i][j][k] << " ";
 			}
 			cout << endl;
+		}
+		cout << endl;
 	}*/
 
 	// To populate `matrices_in_type_matrix`
@@ -330,7 +328,7 @@ int main(void) {
 		}
 		 outfile.close();
 	}
-	write_info("./output/info.txt",matrices_in_type_matrix);
+	write_info("./output/",matrices_in_type_matrix);
 	// To print the all matrices present in type matrices
 	for(i = 0; i < matrices_in_type_matrix.size(); i++) {
 		cout<<"Matrices in Type "<<(i + 1)<<":"<<endl;
