@@ -184,13 +184,11 @@ int main() {
 	
 	// To read from type matrices
 	row info = read_info("./output/info.txt");
-	int temp_m_vertices;
-	cout<<"Enter the m_vertices for the given file: ";
-	cin>>temp_m_vertices;
+
 	for(int z = 0; z < info.size(); z++) {
-		string filename = "./output/m_vertices_" + to_string(temp_m_vertices) + "_type_size_" + to_string(type_size) + "_" + std::to_string(z + 1) + ".txt";
+		string filename = "./output/m_vertices_" + to_string(flagsize) + "_type_size_" + to_string(type_size) + "_" + std::to_string(z + 1) + ".txt";
 		cout<<"Type "<<(z + 1)<<":"<<endl;
-		vector_matrix tmp = get_matrices(filename,info[z],temp_m_vertices,(temp_m_vertices - 1));
+		vector_matrix tmp = get_matrices(filename,info[z],flagsize,(flagsize - 1));
 		for(int y = 0; y < tmp.size(); y++) {
 			matrix F_1 = tmp[y];
 			for(int x = y; x < tmp.size(); x++) {
@@ -238,7 +236,7 @@ int main() {
 				}
 				bool_array second_comparison = compare_with_given_matrix(pruned_matrices_2, F_2);
 				int count = count_of_same_matrices(first_comparison, second_comparison);
-				if(count > 0) cout<<"Count of Similar Matrices are: "<<count<<endl;
+				cout<<"1 "<<info.size()<<" "<<(y + 1)<<" "<<(x + 1)<<" "<<count<<endl;
 			}
 		}
 	}
