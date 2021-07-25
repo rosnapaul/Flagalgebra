@@ -131,7 +131,7 @@ row read_info(string filename) {
 
 int main() {
 	int m_vertices,i,j,k,l,m,dummy,r,type_size;
-	cout<<"Enter the number of vertices"<<endl;
+	cout<<"Enter the number of vertices: ";
 	cin>>m_vertices;
 	type_size = 5; //TODO ask type size later
 	matrix min, new_mat;
@@ -184,10 +184,13 @@ int main() {
 	
 	// To read from type matrices
 	row info = read_info("./output/info.txt");
+	int temp_m_vertices;
+	cout<<"Enter the m_vertices for the given file: ";
+	cin>>temp_m_vertices;
 	for(int z = 0; z < info.size(); z++) {
 		string filename = "./output/type" + to_string(z+1) + ".txt";
 		cout<<"Type "<<(z + 1)<<":"<<endl;
-		vector_matrix tmp = get_matrices(filename,info[z],m_vertices,(m_vertices - 1));
+		vector_matrix tmp = get_matrices(filename,info[z],temp_m_vertices,(temp_m_vertices - 1));
 		for(int y = 0; y < tmp.size(); y++) {
 			matrix F_1 = tmp[y];
 			for(int x = y; x < tmp.size(); x++) {
