@@ -188,7 +188,7 @@ int main() {
 	cout<<"Enter the m_vertices for the given file: ";
 	cin>>temp_m_vertices;
 	for(int z = 0; z < info.size(); z++) {
-		string filename = "./output/type" + to_string(z+1) + ".txt";
+		string filename = "./output/m_vertices_" + to_string(temp_m_vertices) + "_type_size_" + to_string(type_size) + "_" + std::to_string(z + 1) + ".txt";
 		cout<<"Type "<<(z + 1)<<":"<<endl;
 		vector_matrix tmp = get_matrices(filename,info[z],temp_m_vertices,(temp_m_vertices - 1));
 		for(int y = 0; y < tmp.size(); y++) {

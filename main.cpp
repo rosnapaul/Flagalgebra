@@ -88,7 +88,8 @@ int main(void) {
 			cin>>rot_sys[i][j]; */
 	int v[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 		// To retrieve `type_matrices`
-	collection_of_matrices type_matrices = get_matrices("file5vertices.txt",6,5,4);
+	string type_filename = "file" + to_string(type_size) + "vertices.txt";
+	collection_of_matrices type_matrices = get_matrices(type_filename,m_vertices,type_size,(type_size  - 1));
 
 	// To print the `type_matrices`
 	/* cout<<"Type Matrices:"<<endl;
@@ -112,7 +113,8 @@ int main(void) {
 
 	//int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,6,3,4}, {1,2,5,3,4}};
 	// To read from the `input.txt` file (reads only one matrix)
-	collection_of_matrices tmp = get_matrices("input.txt",165,m_vertices,m_vertices-1);
+	string input_filename = "m_vertices_" + to_string(m_vertices) + "_input.txt";
+	collection_of_matrices tmp = get_matrices(input_filename,1,m_vertices,(m_vertices - 1));
 	int rot_sys[m_vertices][m_vertices-1];
 	memset( rot_sys, 0, m_vertices*(m_vertices-1)*sizeof(int) );
 	for(int z = 0; z < tmp.size(); z++) {
@@ -321,7 +323,7 @@ int main(void) {
   for(i = 0; i < matrices_in_type_matrix.size(); i++) {
   	ofstream outfile;
   	stringstream filename;
-  	filename<<"./output/type"+std::to_string(i+1)+".txt";
+  	filename<<"./output/m_vertices_" + to_string(m_vertices) + "_type_size_" + to_string(type_size) + "_" + std::to_string(i+1) + ".txt";
   	outfile.open(filename.str().c_str(), ofstream::out);
 		for(j = 0; j < matrices_in_type_matrix[i].size(); j++) {
 			for(k = 0; k < matrices_in_type_matrix[i][j].size(); k++) {
