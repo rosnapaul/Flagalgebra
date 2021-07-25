@@ -48,17 +48,4 @@ inline void write_info(string file_dir,collection_of_collection_of_matrices data
 	outfile.close();
 }
 
-inline row read_info(string file_dir) {
-	unsigned char temp_char;
-	int temp;
-	ifstream infile;
-	infile.open(file_dir); // To read the file
-	row temp_row;
-	infile >> temp_char;
-	temp = (int) temp_char - 48; // To Convert ASCII Number to Digit
-	temp_row.push_back(temp);
-	infile.close();
-	return temp_row;
-}
-
 #endif

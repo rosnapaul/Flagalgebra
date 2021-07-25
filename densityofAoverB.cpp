@@ -38,8 +38,8 @@ using namespace std;
 
 typedef vector<int> row;
 typedef vector<bool> bool_array;
-typedef vector<vector<int>> matrix;
-typedef vector<vector<vector<int>>> vector_matrix;
+typedef vector<vector<int> > matrix;
+typedef vector<vector<vector<int> > > vector_matrix;
 
 int lowestinarray(vector<int> arow) {
 	int lowest_ele,k = 0;
@@ -52,7 +52,7 @@ int lowestinarray(vector<int> arow) {
 	return k;
 }
 
-void rotating_array(vector<vector<vector<int>>> &compmat, int m_vertices) {
+void rotating_array(vector<vector<vector<int> > > &compmat, int m_vertices) {
 	int mini_position;
 	int r,rotate_copy[compmat.size()][m_vertices-1];
 	for(int k = 0; k < compmat.size(); k++) {
