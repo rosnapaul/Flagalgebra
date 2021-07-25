@@ -186,11 +186,11 @@ int main() {
 	row info = read_info("./output/info.txt");
 	for(int z = 0; z < info.size(); z++) {
 		string filename = "./output/type" + to_string(z+1) + ".txt";
-		cout<<filename<<":"<<endl;
+		cout<<"Type "<<(z + 1)<<":"<<endl;
 		vector_matrix tmp = get_matrices(filename,info[z],m_vertices,(m_vertices - 1));
 		for(int y = 0; y < tmp.size(); y++) {
 			matrix F_1 = tmp[y];
-			for(int x = 0; x < tmp.size(); x++) {
+			for(int x = y; x < tmp.size(); x++) {
 				matrix F_2 = tmp[x];
 				// matrix F_1 {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6},{1,2,3,4,5}};
 				// matrix F_2 {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,3,4,6},{1,2,3,4,5}};
