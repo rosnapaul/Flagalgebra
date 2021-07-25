@@ -114,7 +114,7 @@ int main(void) {
 	//int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,6,3,4}, {1,2,5,3,4}};
 	// To read from the `input.txt` file (reads only one matrix)
 	string input_filename = "m_vertices_" + to_string(m_vertices) + "_input.txt";
-	collection_of_matrices tmp = get_matrices(input_filename,1,m_vertices,(m_vertices - 1));
+	collection_of_matrices tmp = get_matrices(input_filename,165,m_vertices,(m_vertices - 1));
 	int rot_sys[m_vertices][m_vertices-1];
 	memset( rot_sys, 0, m_vertices*(m_vertices-1)*sizeof(int) );
 	for(int z = 0; z < tmp.size(); z++) {

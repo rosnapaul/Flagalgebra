@@ -236,7 +236,7 @@ int main() {
 				}
 				bool_array second_comparison = compare_with_given_matrix(pruned_matrices_2, F_2);
 				int count = count_of_same_matrices(first_comparison, second_comparison);
-				cout<<"1 "<<info.size()<<" "<<(y + 1)<<" "<<(x + 1)<<" "<<count<<endl;
+				cout<<"1 "<<(z + 1)<<" "<<(y + 1)<<" "<<(x + 1)<<" "<<count<<endl;
 			}
 		}
 	}
