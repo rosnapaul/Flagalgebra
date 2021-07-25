@@ -42,16 +42,16 @@ int lowestinarray(vector<int> arow) {
 	int lowest_ele,k = 0;
 	lowest_ele = arow[0];
 	for(int i = 0; i < arow.size(); i++)
-		if(arow[i] < lowest_ele){
+		if(arow[i] < lowest_ele) {
 			lowest_ele = arow[i];
-	    k = i;
+			k = i;
 		}
 	return k;
 }
 
 void rotating_array(vector<vector<vector<int> > > &compmat, int m_vertices) {
 	int mini_position;
-	int r,rotate_copy[compmat.size()][m_vertices-1];
+	int r,rotate_copy[compmat.size()][m_vertices - 1];
 	for(int k = 0; k < compmat.size(); k++) {
 		for(int i = 0; i < compmat[k].size(); i++) {          
 			mini_position = lowestinarray(compmat[k][i]);
@@ -68,23 +68,23 @@ void rotating_array(vector<vector<vector<int> > > &compmat, int m_vertices) {
 int search_in_vector(vector<int> some_row, int s) {
 	for(int i = 0; i < some_row.size(); i++)
 		if(some_row[i] == s)
-		  return i;
+			return i;
 	return 0;
 }
 
 int search_in_array(int v[], int s, int l) {
 	for(int i = 0; i < l; i++)
-		if(v[i]==s)
-			return i+1;
+		if(v[i] == s)
+			return i + 1;
 	return 0;
 }	
 
 bool_array compare_with_given_matrix(vector_matrix matrices, matrix given_matrix) {
 	bool_array temp;
-	for(int matrix=0; matrix<matrices.size(); matrix++) {
+	for(int matrix = 0; matrix < matrices.size(); matrix++) {
 		bool same = true;
-		for(int row=0; row<matrices[matrix].size(); row++) {
-			for(int col=0; col<matrices[matrix][row].size(); col++) {
+		for(int row = 0; row < matrices[matrix].size(); row++) {
+			for(int col = 0; col < matrices[matrix][row].size(); col++) {
 				if(matrices[matrix][row][col] != given_matrix[row][col]) {
 					same = false;
 					break;
@@ -103,7 +103,7 @@ int count_of_same_matrices(bool_array A, bool_array B) {
 		cout<<"Both arrays don't have same no. of elements."<<endl;
 		return 1;
 	} else {
-		for(int temp=0; temp<A.size(); temp++)
+		for(int temp = 0; temp < A.size(); temp++)
 			if(A[temp] == true && B[temp] == true)
 				++count;
 	}
@@ -137,7 +137,7 @@ int main() {
 	vector_matrix compmat;
 
 	int v[] = {1,2,3,4,5,6,7,8,9,10,11,12,13};
-	std::sort(v,v+m_vertices);
+	std::sort(v,(v + m_vertices));
 
 	// Collecting the Rotation System, this is the big rotation system . 
 	matrix rot_sys {{2,3,4,5,6,7}, {1,3,4,5,6,7}, {1,2,4,5,6,7}, {1,2,3,5,6,7}, {1,2,3,4,6,7}, {1,2,3,4,5,7}, {1,2,3,4,5,6}};
@@ -147,17 +147,17 @@ int main() {
 		for(j = 0; j < (m_vertices - 1); j++) {
 			cin>>k;
 			temp1.push_back(k);
-    }
+		}
 		rot_sys.push_back(temp1);
-  } */
+	} */
 	
 	//  Relabeling of the Vertices corresponding to combination
-	do{
+	do {
 		matrix change_mat;
-		for(l = 0; l <m_vertices; l++) { // we avoid the extra rows in the big matrix	
+		for(l = 0; l < m_vertices; l++) { // we avoid the extra rows in the big matrix	
 			row temp3;
 			for(m = 0; m < m_vertices-1; m++) {
-				k = search_in_array(v, rot_sys[v[l]-1][m], m_vertices);
+				k = search_in_array(v, rot_sys[v[l] - 1][m], m_vertices);
 				temp3.push_back(k);
 			}
 			change_mat.push_back(temp3);
@@ -168,15 +168,15 @@ int main() {
 	rotating_array(compmat, m_vertices); 
 	
 	int extra_vert, flagsize;
-	extra_vert = (m_vertices - type_size)/2;
+	extra_vert = (m_vertices - type_size) / 2;
 	//cout<<"extr vert"<<extra_vert<<endl;
-	flagsize = type_size+extra_vert;
+	flagsize = type_size + extra_vert;
 	//cout<<"flagsize"<<flagsize<<endl;
 	int f_1[flagsize], f_2[flagsize];
 	
-	for(i=0;i<flagsize;i++){
-		f_1[i]=0;
-		f_2[i]=0;
+	for(i = 0; i < flagsize; i++) {
+		f_1[i] = 0;
+		f_2[i] = 0;
 		cout<<f_1[i]<<f_2[i];
 	}
 	cout<<endl;
@@ -223,8 +223,8 @@ int main() {
 		for(i = 0; i < compmat[k].size(); i++) {
 			row temp_row;
 			if((type_size <= (i % m_vertices)) && ((i % m_vertices) < flagsize)) continue;
-			for(j=0;j<compmat[k][i].size();j++) {
-				if((type_size < (compmat[k][i][j])) && ((compmat[k][i][j]) < (flagsize+1))) continue;
+			for(j = 0; j < compmat[k][i].size(); j++) {
+				if((type_size < (compmat[k][i][j])) && ((compmat[k][i][j]) < (flagsize + 1))) continue;
 				if(compmat[k][i][j] > flagsize) compmat[k][i][j] = compmat[k][i][j] - extra_vert;
 				cout<<compmat[k][i][j]<<" "; 
 				temp_row.push_back(compmat[k][i][j]);
@@ -235,7 +235,7 @@ int main() {
 		cout<<endl;
 		pruned_matrices_2.push_back(temp_matrix);
 	}
-	bool_array second_comparison = compare_with_given_matrix(pruned_matrices_2,F_2);
+	bool_array second_comparison = compare_with_given_matrix(pruned_matrices_2, F_2);
 	cout<<"Count of Similar Matrices are: "<<count_of_same_matrices(first_comparison, second_comparison)<<endl;
 	return 0;
 }
