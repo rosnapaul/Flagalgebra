@@ -131,17 +131,31 @@ row read_info(string filename) {
 
 int main() {
 	int m_vertices,i,j,k,l,m,dummy,r,type_size;
-	cout<<"Enter the number of vertices: ";
+	cout<<"Enter the number of vertices in the big fileC: ";
 	cin>>m_vertices;
-	type_size = 5; //TODO ask type size later
+	type_size = 3; //TODO ask type size later
 	matrix min, new_mat;
 	vector_matrix compmat;
 
 	int v[] = {1,2,3,4,5,6,7,8,9,10,11,12,13};
 	std::sort(v,(v + m_vertices));
 
+
+
 	// Collecting the Rotation System, this is the big rotation system .
-	matrix rot_sys {{2,3,4,5,6,7}, {1,3,4,5,6,7}, {1,2,4,5,6,7}, {1,2,3,5,6,7}, {1,2,3,4,6,7}, {1,2,3,4,5,7}, {1,2,3,4,5,6}};
+	vector_matrix mainmat = get_matrices("densityofAoverB_input.txt",2,m_vertices,m_vertices-1);
+	for(int z=0; z< mainmat.size(); z++)
+	{
+		int matcount = 0;
+	matrix rot_sys = mainmat[z];
+	for(i = 0; i < m_vertices; i++) {
+		for(j = 0; j < (m_vertices-1); j++)
+			cout<<rot_sys[i][j]<<" ";
+		cout<<endl;
+	}
+
+
+//	matrix rot_sys {{2,3,4,5,6,7}, {1,3,4,5,6,7}, {1,2,4,5,6,7}, {1,2,3,5,6,7}, {1,2,3,4,6,7}, {1,7,2,3,4,5}, {1,6,2,3,4,5}};
 	/* cout<<"Enter the rotation system"<<endl;
 	for(i = 0; i < m_vertices; i++) {
 		row temp1;
@@ -194,6 +208,7 @@ int main() {
 			pruned_matrices_1.push_back(temp_matrix);
 		}
 
+
 		vector_matrix pruned_matrices_2;
 		//cout<<"The second changed matrix is"<<endl;
 		for(k = 0; k < compmat.size(); k++) {
@@ -224,7 +239,9 @@ int main() {
 	// To read from type matrices
 	row info = read_info("./output/info.txt");
 
+
 	for(int z = 0; z < info.size(); z++) {
+
 		string filename = "./output/m_vertices_" + to_string(flagsize) + "_type_size_" + to_string(type_size) + "_" + std::to_string(z + 1) + ".txt";
 		cout<<"Type "<<(z + 1)<<":"<<endl;
 		vector_matrix tmp = get_matrices(filename,info[z],flagsize,(flagsize - 1));
@@ -242,12 +259,17 @@ int main() {
 
 				bool_array second_comparison = compare_with_given_matrix(pruned_matrices_2, F_2);
 				 int count = count_of_same_matrices(first_comparison, second_comparison);
-				 for (count > 0) cout<<"1 "<<(z + 1)<<" "<<(y + 1)<<" "<<(x + 1)<<" "<<count<<endl;
+				 if (count > 0) cout<<"1 "<<(z + 1)<<" "<<(y + 1)<<" "<<(x + 1)<<" "<<count<<endl;
 				F_2.clear();
 			}
 			F_1.clear();
 		}
 		tmp.clear();
 	}
+	rot_sys.clear();
+  pruned_matrices_2.clear();
+	pruned_matrices_1.clear();
+	compmat.clear();
+}
 	return 0;
 }
