@@ -78,10 +78,11 @@ int main(void) {
 
 	/* cout<<"Enter the m_vertices: ";
 	cin>>m_vertices; */
-	m_vertices = 6;
+	m_vertices = 5;
 	/* cout<<"Enter the type size: ";
 	cin>>type_size; */
-	type_size = 5;
+	type_size = 3;
+	int num_matrix_type_size = 1; // number of matrices in the type file.
 	/* cout<<"Enter the rotation system: "<<endl;
  	for(i = 0; i < m_vertices; i++)
 		for(j = 0; j < (m_vertices-1); j++)
@@ -89,10 +90,11 @@ int main(void) {
 	int v[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 		// To retrieve `type_matrices`
 	string type_filename = "file" + to_string(type_size) + "vertices.txt";
-	collection_of_matrices type_matrices = get_matrices(type_filename,m_vertices,type_size,(type_size  - 1));
+	collection_of_matrices type_matrices = get_matrices(type_filename,num_matrix_type_size,type_size,(type_size  - 1));
 
 	// To print the `type_matrices`
-	/* cout<<"Type Matrices:"<<endl;
+	/*
+	 cout<<"Type Matrices:"<<endl;
 	int counter = 0;
 	for(i = 0; i < type_matrices.size(); i++) {
 		cout<<"Type Matrix "<<++counter<<":"<<endl;
@@ -103,8 +105,8 @@ int main(void) {
 			cout << endl;
 		}
 		cout << endl;
-	}*/
-
+	}
+*/
 	// To populate `matrices_in_type_matrix`
 	for(i = 0; i < type_matrices.size(); i++) {
 		collection_of_matrices temp_collection;
@@ -114,14 +116,16 @@ int main(void) {
 	//int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,6,3,4}, {1,2,5,3,4}};
 	// To read from the `input.txt` file (reads only one matrix)
 	string input_filename = "m_vertices_" + to_string(m_vertices) + "_input.txt";
-	collection_of_matrices tmp = get_matrices(input_filename,165,m_vertices,(m_vertices - 1));
+	collection_of_matrices tmp = get_matrices(input_filename,6,m_vertices,(m_vertices - 1));
 	int rot_sys[m_vertices][m_vertices-1];
 	memset( rot_sys, 0, m_vertices*(m_vertices-1)*sizeof(int) );
 	for(int z = 0; z < tmp.size(); z++) {
+
 		for(j = 0; j < tmp[z].size(); j++)
-			for(k = 0; k < tmp[z][j].size(); k++)
+			for(k = 0; k < tmp[z][j].size(); k++){
 				rot_sys[j][k] = tmp[z][j][k];
 
+				}
 		// To print the `rot_sys` matrix.
 		/* for(i = 0; i < m_vertices; i++) {
 			for(j = 0; j < (m_vertices-1); j++)
@@ -246,7 +250,8 @@ int main(void) {
 		}
 
 		// To print the pruned matrices
-		/* cout<<"After Pruning:"<<endl;
+		/*
+		 cout<<"After Pruning:"<<endl;
 		int counter = 0;
 		for(i = 0; i < pruned_lexico_min.size(); i++) {
 				cout<<"Matrix "<<++counter<<":"<<endl;
@@ -257,13 +262,13 @@ int main(void) {
 					cout << endl;
 				}
 				cout << endl;
-		} */
-
+		}
+*/int diff = m_vertices - type_size;
 		// To reduce the matrix
 		collection_of_matrices reduced_matrices;
 		for(i = 0; i < pruned_lexico_min.size(); i++) {
 			collection_of_rows temp_matrix;
-			for(j = 0; j < (pruned_lexico_min[i].size() - 1); j++) {
+			for(j = 0; j < (pruned_lexico_min[i].size() - diff); j++) {
 				row temp_row;
 				for(k = 0; k < pruned_lexico_min[i][j].size(); k++) {
 					if(pruned_lexico_min[i][j][k] < (type_size + 1)) {
@@ -276,7 +281,8 @@ int main(void) {
 		}
 
 		// To print reduced matrices
-		/* cout<<"After Reducing:"<<endl;
+ /*
+		 cout<<"After Reducing:"<<endl;
 		counter = 0;
 		for(i = 0; i < reduced_matrices.size(); i++) {
 			cout<<"Matrix "<<++counter<<":"<<endl;
@@ -287,17 +293,22 @@ int main(void) {
 				cout << endl;
 			}
 			cout << endl;
-		} */
-
+		}
+*/
 		// To compare reduced matrices with type matrices
 		for(i = 0; i < reduced_matrices.size(); i++) {
 			for(int type = 0; type < type_matrices.size(); type++) {
 				bool is_same = true;
+
+
 				for(j = 0; j < reduced_matrices[i].size(); j++) {
+
 					for(k = 0; k < reduced_matrices[i][j].size(); k++) {
+
 						// To break the loop if element is not same
 						if(reduced_matrices[i][j][k] != type_matrices[type][j][k]) {
 							is_same = false;
+
 							break;
 						}
 					}
@@ -306,11 +317,13 @@ int main(void) {
 				}
 				// To push to the specific type the equivalent matrix from the pruned_lexico_min matrices.
 				if(is_same == true) {
+
 					matrices_in_type_matrix[type].push_back(pruned_lexico_min[i]);
 					break;
 				}
 			}
 		}
+
 		memset( rot_sys, 0, m_vertices*(m_vertices-1)*sizeof(int) );
 		classification_of_permutation.clear();
 		lexicographic_min.clear();
