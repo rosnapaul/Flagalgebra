@@ -118,10 +118,14 @@ int main() {
 	matrix min, new_mat;
 	vector_matrix compmat;
 
-
 	int v[] = {1,2,3,4,5,6,7,8,9,10,11,12,13};
 
 	std::sort(v,v+m_vertices);
+
+	ofstream outfile;
+  	stringstream filename;
+  	filename<<"./output/density_A_over_B.txt";
+  	outfile.open(filename.str().c_str(), ofstream::out);
 	// Collecting the Rotation System, this is the big rotation system .
 	//matrix rot_sys {{2, 3, 4 ,5, 6, 7},{1, 3, 4, 5, 7, 6},{1, 2, 6, 4, 5, 7},{1, 2, 3, 6, 5, 7},{1, 2, 3, 4, 6, 7},{1, 2, 7, 5, 4, 3},{1, 6, 2, 3, 4, 5}};
 	vector_matrix tmp = get_matrices("densityofAoverB_input.txt",15,m_vertices,m_vertices-1);
@@ -198,13 +202,13 @@ int main() {
 
 	bool_array first_comparison = compare_with_given_matrix(pruned_matrices_1,F_1);
 
-	cout<<"Count of Similar Matrices are: "<<(count_of_same_matrices(first_comparison))/72<<endl;
+	outfile<<"Count of Similar Matrices are: "<<(count_of_same_matrices(first_comparison))/72<<endl;
 	rot_sys.clear();
 	//change_mat.clear();
 	pruned_matrices_1.clear();
 	compmat.clear();
 	//temp_matrix.clear();
 }
-
+	outfile.close();
 	return 0;
 }
