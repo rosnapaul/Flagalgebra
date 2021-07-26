@@ -140,7 +140,10 @@ int main() {
 	int v[] = {1,2,3,4,5,6,7,8,9,10,11,12,13};
 	std::sort(v,(v + m_vertices));
 
-
+	ofstream outfile;
+  	stringstream filename;
+  	filename<<"./output/density_AB_over_C.txt";
+  	outfile.open(filename.str().c_str(), ofstream::out);
 
 	// Collecting the Rotation System, this is the big rotation system .
 	vector_matrix mainmat = get_matrices("densityofAoverB_input.txt",2,m_vertices,m_vertices-1);
@@ -239,11 +242,10 @@ int main() {
 	// To read from type matrices
 	row info = read_info("./output/info.txt");
 
-
 	for(int z = 0; z < info.size(); z++) {
 
 		string filename = "./output/m_vertices_" + to_string(flagsize) + "_type_size_" + to_string(type_size) + "_" + std::to_string(z + 1) + ".txt";
-		cout<<"Type "<<(z + 1)<<":"<<endl;
+		outfile<<"Type "<<(z + 1)<<":"<<endl;
 		vector_matrix tmp = get_matrices(filename,info[z],flagsize,(flagsize - 1));
 
 		for(int y = 0; y < tmp.size(); y++) {
@@ -259,7 +261,7 @@ int main() {
 
 				bool_array second_comparison = compare_with_given_matrix(pruned_matrices_2, F_2);
 				 int count = count_of_same_matrices(first_comparison, second_comparison);
-				 if (count > 0) cout<<"1 "<<(z + 1)<<" "<<(y + 1)<<" "<<(x + 1)<<" "<<count<<endl;
+				 if (count > 0) outfile<<"1 "<<(z + 1)<<" "<<(y + 1)<<" "<<(x + 1)<<" "<<count<<endl;
 				F_2.clear();
 			}
 			F_1.clear();
@@ -271,5 +273,7 @@ int main() {
 	pruned_matrices_1.clear();
 	compmat.clear();
 }
+	outfile.close();
+	cout<<"Completed!"<<endl;
 	return 0;
 }
