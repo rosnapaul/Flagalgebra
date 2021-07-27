@@ -147,10 +147,10 @@ int main() {
 
 	// Collecting the Rotation System, this is the big rotation system .
 	vector_matrix mainmat = get_matrices("densityofAoverB_input.txt",2,m_vertices,m_vertices-1);
-	for(int z=0; z< mainmat.size(); z++)
+	for(int b=0; b< mainmat.size(); b++)
 	{
 		int matcount = 0;
-	matrix rot_sys = mainmat[z];
+	matrix rot_sys = mainmat[b];
 	for(i = 0; i < m_vertices; i++) {
 		for(j = 0; j < (m_vertices-1); j++)
 			cout<<rot_sys[i][j]<<" ";
@@ -261,7 +261,7 @@ int main() {
 
 				bool_array second_comparison = compare_with_given_matrix(pruned_matrices_2, F_2);
 				 int count = count_of_same_matrices(first_comparison, second_comparison);
-				 if (count > 0) outfile<<"1 "<<(z + 1)<<" "<<(y + 1)<<" "<<(x + 1)<<" "<<count<<endl;
+				 if (count > 0) outfile<<b+1<<" "<<(z + 1)<<" "<<(y + 1)<<" "<<(x + 1)<<" "<<count<<endl;
 				F_2.clear();
 			}
 			F_1.clear();
