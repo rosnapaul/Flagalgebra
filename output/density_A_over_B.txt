@@ -1,0 +1,7 @@
+Count of Similar Matrices are: 5
+Count of Similar Matrices are: 1
+Count of Similar Matrices are: 3
+Count of Similar Matrices are: 3
+Count of Similar Matrices are: 5
+Count of Similar Matrices are: 5
+5 1 3 total number of different graphs3

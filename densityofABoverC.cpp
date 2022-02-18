@@ -133,7 +133,7 @@ int main() {
 	int m_vertices,i,j,k,l,m,dummy,r,type_size;
 	cout<<"Enter the number of vertices in the big fileC: ";
 	cin>>m_vertices;
-	type_size = 3; //TODO ask type size later
+	type_size = 1; //TODO ask type size later
 	matrix min, new_mat;
 	vector_matrix compmat;
 
@@ -146,7 +146,7 @@ int main() {
   	outfile.open(filename.str().c_str(), ofstream::out);
 
 	// Collecting the Rotation System, this is the big rotation system .
-	vector_matrix mainmat = get_matrices("densityofAoverB_input.txt",2,m_vertices,m_vertices-1);
+	vector_matrix mainmat = get_matrices("densityofAoverB_input.txt",1,m_vertices,m_vertices-1);
 	for(int b=0; b< mainmat.size(); b++)
 	{
 		int matcount = 0;
@@ -212,6 +212,8 @@ int main() {
 		}
 
 
+
+
 		vector_matrix pruned_matrices_2;
 		//cout<<"The second changed matrix is"<<endl;
 		for(k = 0; k < compmat.size(); k++) {
@@ -232,6 +234,39 @@ int main() {
 			pruned_matrices_2.push_back(temp_matrix);
 		}
 
+		for(k = 0; k < pruned_matrices_1.size(); k++) {
+
+			for(i = 0; i < pruned_matrices_1[k].size(); i++) {
+
+				for(j=0;j<pruned_matrices_1[k][i].size();j++) {
+					outfile<<pruned_matrices_1[k][i][j];
+					//cout<<compmat[k][i][j]<<" ";
+
+				}
+				outfile<<endl;
+
+			}
+			outfile<<endl;
+
+		}
+
+
+ outfile<<"second set of matrices"<<endl;
+		for(k = 0; k < pruned_matrices_2.size(); k++) {
+
+			for(i = 0; i < pruned_matrices_2[k].size(); i++) {
+
+				for(j=0;j<pruned_matrices_2[k][i].size();j++) {
+					outfile<<pruned_matrices_2[k][i][j];
+					//cout<<compmat[k][i][j]<<" ";
+
+				}
+				outfile<<endl;
+
+			}
+			outfile<<endl;
+
+		}
 	//TODO: make this program in such a way that the matrices F_1 and F_2 are automatically collected from the file.
 	// we use flags only of the same type.
 	// may be we can add some steps to check whether the flags are coming from the same type.

@@ -1,3 +1,23 @@
+/* This program is to generate flags. Give flag size as m_vertices
+and type sie as type_size. We take the file1 of rotation systems
+for flags (rotation system of m_vertices) and file2 Containing
+unique rotation system of each types. For each element in the
+file1, we consider all posible relabelling which is (m_vertices)!.
+By considering the pattern of the permutation by C++, in each
+iterartion the first few elements are same. So we bundle those
+ permutations whose type_size elemets remains same. From each
+ of these bundle we choose the lexicographic minimum rot sys.
+ Because all of the elements in the same bundle corresponds to
+ the same flag. After choosing one element from each bundle,
+ we remove the duplicates. From the remaining collection,
+ we take the submatrix of first type_size elements and directly
+ compare it with the type rot sys. And classilfy the flags
+ according to each type and gives the output file.
+*/
+
+
+
+
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -78,10 +98,10 @@ int main(void) {
 
 	/* cout<<"Enter the m_vertices: ";
 	cin>>m_vertices; */
-	m_vertices = 5;
+	m_vertices = 4; //Flag size
 	/* cout<<"Enter the type size: ";
 	cin>>type_size; */
-	type_size = 3;
+	type_size = 1;
 	int num_matrix_type_size = 1; // number of matrices in the type file.
 	/* cout<<"Enter the rotation system: "<<endl;
  	for(i = 0; i < m_vertices; i++)
@@ -107,7 +127,7 @@ int main(void) {
 		cout << endl;
 	}
 */
-	// To populate `matrices_in_type_matrix`
+	// To populate `matrices_in_type_matrix`- boxes for the output
 	for(i = 0; i < type_matrices.size(); i++) {
 		collection_of_matrices temp_collection;
 		matrices_in_type_matrix.push_back(temp_collection);
@@ -116,9 +136,9 @@ int main(void) {
 	//int rot_sys[m_vertices][m_vertices-1] = {{2,3,4,5,6}, {1,3,4,5,6}, {1,2,4,5,6}, {1,2,3,5,6}, {1,2,6,3,4}, {1,2,5,3,4}};
 	// To read from the `input.txt` file (reads only one matrix)
 	string input_filename = "m_vertices_" + to_string(m_vertices) + "_input.txt";
-	collection_of_matrices tmp = get_matrices(input_filename,6,m_vertices,(m_vertices - 1));
+	collection_of_matrices tmp = get_matrices(input_filename,2,m_vertices,(m_vertices - 1));
 	int rot_sys[m_vertices][m_vertices-1];
-	memset( rot_sys, 0, m_vertices*(m_vertices-1)*sizeof(int) );
+	memset( rot_sys, 0, m_vertices*(m_vertices-1)*sizeof(int) ); // make matrix a zero matrix
 	for(int z = 0; z < tmp.size(); z++) {
 
 		for(j = 0; j < tmp[z].size(); j++)
@@ -347,6 +367,11 @@ int main(void) {
 			}
 			outfile<<endl;
 		}
+		if(search_in_vector(counting,current_value) == -1) counting.push_back(current_value);
+
+
+	outfile<<"Count of Similar Matrices are: "<<(count_of_same_matrices(first_comparison))<<endl;
+
 		 outfile.close();
 	}
 	write_info("./output/",matrices_in_type_matrix);
