@@ -211,7 +211,7 @@ int main()
   outfile.open(filename.str().c_str(), ofstream::out);
   // Collecting the Rotation System, this is the big rotation system .
   // matrix rot_sys {{2, 3, 4 ,5, 6, 7},{1, 3, 4, 5, 7, 6},{1, 2, 6, 4, 5, 7},{1, 2, 3, 6, 5, 7},{1, 2, 3, 4, 6, 7},{1, 2, 7, 5, 4, 3},{1, 6, 2, 3, 4, 5}};
-  vector_matrix tmp = get_matrices("densityofAoverB_input.txt", 6, m_vertices, m_vertices - 1);
+  vector_matrix tmp = get_matrices("densityofAoverB_input.txt", 70, m_vertices, m_vertices - 1);
   for (int z = 0; z < tmp.size(); z++)
   {
     int matcount = 0;
@@ -255,7 +255,7 @@ int main()
                 row temp3;
                 for (m = 0; m < m_vertices - 1; m++)
                 {
-                  k = search_in_array(v, rot_sys[l][m], m_vertices - 1);
+                  k = search_in_array(v, rot_sys[l][m], 4);
                   if (k > 0)
                   {
                     temp3.push_back(k);
