@@ -30,6 +30,8 @@
 #include <math.h>
 #include <algorithm>
 #include <stdio.h>
+#include <iterator>
+#include <set>
 #include "read_matrix.h"
 
 using namespace std;
@@ -367,6 +369,7 @@ int main()
     converted_bool.push_back(temp);
   }
 
+  cout << "This is the converted_bool: " << endl;
   for (int i = 0; i < converted_bool.size(); i++)
   {
     for (int j = 0; j < converted_bool[i].size(); j++)
@@ -375,7 +378,7 @@ int main()
     }
     cout << endl;
   }
-  cout << "now going to duplicate" << endl;
+
   row duplicate_entries;
   for (unsigned int counter = 0; counter < converted_bool.size() - 1; counter++)
   {
@@ -400,25 +403,28 @@ int main()
     }
   }
 
-  matrix pruned_lexico_min;
+  matrix first_pruned_lexico_min;
   for (i = 0; i < converted_bool.size(); i++)
   {
     if (isDuplicate(i, duplicate_entries) == false)
     {
-      pruned_lexico_min.push_back(converted_bool[i]);
+      first_pruned_lexico_min.push_back(converted_bool[i]);
     }
   }
 
+  matrix pruned_lexico_min;
+  set<row> s(first_pruned_lexico_min.begin(), first_pruned_lexico_min.end());
+  pruned_lexico_min.assign(s.begin(), s.end());
+
   // To print the pruned matrices
-  cout << endl;
   cout << endl;
   cout << "After Pruning:" << endl;
   int counter = 0;
-  for (i = 0; i < pruned_lexico_min.size(); i++)
+  for (int row = 0; row < pruned_lexico_min.size(); row++)
   {
-    for (j = 0; j < pruned_lexico_min[i].size(); j++)
+    for (int col = 0; col < pruned_lexico_min[row].size(); col++)
     {
-      cout << pruned_lexico_min[i][j] << " ";
+      cout << pruned_lexico_min[row][col] << " ";
     }
     cout << endl;
   }
