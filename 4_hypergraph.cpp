@@ -213,7 +213,7 @@ int main()
   outfile.open(filename.str().c_str(), ofstream::out);
   // Collecting the Rotation System, this is the big rotation system .
   // matrix rot_sys {{2, 3, 4 ,5, 6, 7},{1, 3, 4, 5, 7, 6},{1, 2, 6, 4, 5, 7},{1, 2, 3, 6, 5, 7},{1, 2, 3, 4, 6, 7},{1, 2, 7, 5, 4, 3},{1, 6, 2, 3, 4, 5}};
-  vector_matrix tmp = get_matrices("densityofAoverB_input.txt", 70, m_vertices, m_vertices - 1);
+  vector_matrix tmp = get_matrices("rotationinmyform.txt", 22730, m_vertices, m_vertices - 1);
   for (int z = 0; z < tmp.size(); z++)
   {
     int matcount = 0;
@@ -378,47 +378,47 @@ int main()
     }
     cout << endl;
   }
-
-  row duplicate_entries;
-  for (unsigned int counter = 0; counter < converted_bool.size() - 1; counter++)
-  {
-    for (i = (counter + 1); i < converted_bool.size(); i++)
+  /*
+    row duplicate_entries;
+    for (unsigned int counter = 0; counter < converted_bool.size() - 1; counter++)
     {
-      bool duplicate = true;
-      for (j = 0; j < converted_bool.size(); j++)
+      for (i = (counter + 1); i < converted_bool.size(); i++)
       {
-        for (k = 0; k < converted_bool[i].size(); k++)
+        bool duplicate = true;
+        for (j = 0; j < converted_bool.size(); j++)
         {
-          if (converted_bool[i][j] != converted_bool[counter][j])
+          for (k = 0; k < converted_bool[i].size(); k++)
           {
-            duplicate = false;
-            break;
+            if (converted_bool[i][j] != converted_bool[counter][j])
+            {
+              duplicate = false;
+              break;
+            }
           }
         }
+        if (duplicate && (i != counter) && (isDuplicate(i, duplicate_entries) == false))
+        {
+          duplicate_entries.push_back(i);
+        }
       }
-      if (duplicate && (i != counter) && (isDuplicate(i, duplicate_entries) == false))
-      {
-        duplicate_entries.push_back(i);
-      }
-    }
-  }
+    } */
 
-  matrix first_pruned_lexico_min;
-  for (i = 0; i < converted_bool.size(); i++)
-  {
-    if (isDuplicate(i, duplicate_entries) == false)
+  /*   matrix first_pruned_lexico_min;
+    for (i = 0; i < converted_bool.size(); i++)
     {
-      first_pruned_lexico_min.push_back(converted_bool[i]);
+      if (isDuplicate(i, duplicate_entries) == false)
+      {
+        first_pruned_lexico_min.push_back(converted_bool[i]);
+      }
     }
-  }
-
+   */
   matrix pruned_lexico_min;
-  set<row> s(first_pruned_lexico_min.begin(), first_pruned_lexico_min.end());
+  set<row> s(converted_bool.begin(), converted_bool.end());
   pruned_lexico_min.assign(s.begin(), s.end());
 
   // To print the pruned matrices
   cout << endl;
-  cout << "After Pruning:" << endl;
+  cout << "After Pruning: (size: " << pruned_lexico_min.size() << ")" << endl;
   int counter = 0;
   for (int row = 0; row < pruned_lexico_min.size(); row++)
   {
